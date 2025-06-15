@@ -7,10 +7,16 @@
 
 import Foundation
 
-class Player{
-    var playerName: String
-    
-    init(name: String){
+@Observable
+class Player: Identifiable, Equatable {
+    let id = UUID()
+    var playerName: String = ""
+
+    init(name: String = "") {
         self.playerName = name
+    }
+
+    static func == (lhs: Player, rhs: Player) -> Bool {
+        lhs.id == rhs.id
     }
 }

@@ -7,6 +7,15 @@
 
 import Foundation
 
+@Observable
 class Game {
-    
+    var players: [Player] = []
+
+    func addPlayer() {
+        players.append(Player())
+    }
+
+    func removePlayer(id: UUID) {
+        players.removeAll { $0.id == id }
+    }
 }
