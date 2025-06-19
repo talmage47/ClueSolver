@@ -26,7 +26,17 @@ struct AddPlayersView: View {
 //                
 //                Spacer()
 
-                PlayerAvatar(playerName: "+")
+                Button(action: {
+                    // nothing yet
+                }) {
+                    VStack(spacing: 4) {
+                        Image(systemName: "person.fill.badge.plus")
+                            .foregroundColor(.white)
+                            .font(.title2)
+                            .padding()
+                            .glassEffect()
+                    }
+                }
             }
         }
         #if os(iOS)
