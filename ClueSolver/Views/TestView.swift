@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct TestView: View {
+    @State private var newPlayerName: String = ""
+    @State private var isAddingPlayer = false
+    @FocusState private var nameFieldIsFocused: Bool
+    
+    
     var body: some View {
-        Image("mansion1")
-            .resizable()
-            .scaledToFill()
-            .ignoresSafeArea()
+        TextField("Enter player name", text: $newPlayerName, onCommit: {
+            //nothing
+        })
+        .textFieldStyle(.roundedBorder)
+        .focused($nameFieldIsFocused)
+        .padding()
+        .onAppear {
+            newPlayerName = ""
+        }
     }
 }
 

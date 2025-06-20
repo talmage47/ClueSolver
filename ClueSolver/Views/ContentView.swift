@@ -9,7 +9,7 @@ import FoundationModels
 import SwiftUI
 
 struct ContentView: View {
-    @State private var generatedImage: Image?
+    private var game: Game = Game()
     
     var body: some View {
         NavigationStack {
@@ -34,7 +34,7 @@ struct ContentView: View {
                     Spacer()
                     
                     
-                    NavigationLink(destination: AddPlayersView()) {
+                    NavigationLink(destination: AddPlayersView(game: game)) {
                         Text("Start New Game")
                             .font(.title2)
                             .padding()
