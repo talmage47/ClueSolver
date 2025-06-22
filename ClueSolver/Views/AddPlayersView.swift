@@ -22,7 +22,7 @@ struct AddPlayersView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            ScrollView {
+            VStack {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(game.players) { player in
                         Text(player.playerName)
@@ -31,33 +31,28 @@ struct AddPlayersView: View {
                             .glassEffect()
                     }
                 }
+                
+                Spacer()
 
-                if isAddingPlayer {
-                    TextField("", text: $newPlayerName, prompt: Text("New player"))
-                        .textFieldStyle(.plain)            // remove native border
-                    .font(.default)
-                    .padding(8)
-                    .glassEffect()                      // same look as names
-                    .frame(minWidth: 100)               // satisfy grid width
-                    .focused($fieldFocused)             // focus state
-                    .submitLabel(.done)                 // nicer return key
-                    .onAppear {                         // ← focus AFTER it exists
-                        newPlayerName = ""
-                        fieldFocused = true
-                    }
-                    .onSubmit(addPlayer)
-                }
-            }
-
-            Button(action: {
-                isAddingPlayer = true
-            }) {
-                Image(systemName: "person.fill.badge.plus")
-                    .font(.title2)
+                TextField("", text: $newPlayerName, prompt: Text("New player"))
+                    .textFieldStyle(.roundedBorder)
                     .padding()
+                    .onSubmit(addPlayer)
                     .glassEffect()
-                }
+                
+                Spacer()
+                
             }
+
+//            Button(action: {
+//                isAddingPlayer = true
+//            }) {
+//                Image(systemName: "person.fill.badge.plus")
+//                    .font(.title2)
+//                    .padding()
+//                    .glassEffect()
+//                }
+        }
             
         
         #if os(iOS)
