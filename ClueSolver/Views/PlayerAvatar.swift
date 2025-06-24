@@ -23,7 +23,6 @@ struct PlayerAvatar: View {
                         Circle()
                             .fill(.ultraThinMaterial)
                             .frame(width: size, height: size)
-                            .glassEffect()
                     }
                     .frame(width: geo.size.width, height: geo.size.height)
                     .position(x: geo.size.width / 2, y: geo.size.height / 2) // ⬅️ Center the circle

@@ -5,7 +5,6 @@
 //  Created by Talmage Gaisford on 6/11/25.
 //
 
-import FoundationModels
 import SwiftUI
 
 struct ContentView: View {
@@ -20,25 +19,25 @@ struct ContentView: View {
                     .ignoresSafeArea()
                 
                 VStack {
-                    Spacer()
                     
                     Text("Clue Solver")
                         .font(.system(size: 48, weight: .bold))
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .glassEffect()
                         .ignoresSafeArea(edges: .horizontal)
                     
                     Spacer()
                     Spacer()
                     
                     
-                    NavigationLink(destination: AddPlayersView(game: game)) {
+                    NavigationLink(destination: AddPlayersStripped(game: game)) {
                         Text("Start New Game")
                             .font(.title2)
                             .padding()
-                            .glassEffect()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
                     
                     Spacer()
@@ -47,7 +46,9 @@ struct ContentView: View {
                         Text("Resume Game")
                             .font(.title2)
                             .padding()
-                            .glassEffect()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
                     
                     Spacer()
@@ -55,6 +56,7 @@ struct ContentView: View {
                 .padding()
             }
         }
+        .navigationTitle(Text(""))
     }
 }
 

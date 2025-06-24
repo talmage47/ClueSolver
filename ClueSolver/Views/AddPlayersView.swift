@@ -17,31 +17,35 @@ struct AddPlayersView: View {
     
     var body: some View {
         ZStack {
-            Image("mansion2")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+//            Image("mansion2")
+//                .resizable()
+//                .scaledToFill()
+//                .ignoresSafeArea()
             
             VStack {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(game.players) { player in
                         Text(player.playerName)
-                            .font(.default)
                             .padding()
-                            .glassEffect()
                     }
                 }
                 
                 Spacer()
 
-                TextField("", text: $newPlayerName, prompt: Text("New player"))
+                TextField("new player", text: $newPlayerName)
                     .textFieldStyle(.roundedBorder)
                     .padding()
-                    .onSubmit(addPlayer)
-                    .glassEffect()
+                    .onSubmit{
+                            addPlayer()
+                    }
+                    .disabled(newPlayerName.isEmpty)
+                    .focused($fieldFocused)
                 
                 Spacer()
                 
+            }
+            .onAppear {
+                fieldFocused = true
             }
 
 //            Button(action: {

@@ -9,14 +9,11 @@ import Foundation
 
 @Observable
 class Game {
-    var players: [Player] = []
+    @Published var players: [Player] = []
+    var playerManager: PlayerManager = PlayerManager(self)
 
-    func addPlayer(newPlayerName: String) {
-        guard !newPlayerName.isEmpty else { return }
-        players.append(Player(name: newPlayerName))
-    }
+    
 
-    func removePlayer(id: UUID) {
-        players.removeAll { $0.id == id }
-    }
+    
+    
 }

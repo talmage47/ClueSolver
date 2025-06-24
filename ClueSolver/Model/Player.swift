@@ -6,14 +6,17 @@
 //
 
 import Foundation
+import SwiftUI
 
 @Observable
 class Player: Identifiable, Equatable {
     let id = UUID()
-    var playerName: String = ""
+    var playerName: String
+    var color: Color
 
-    init(name: String = "") {
+    init(name: String, color: Color) {
         self.playerName = name
+        self.color = color
     }
 
     static func == (lhs: Player, rhs: Player) -> Bool {
