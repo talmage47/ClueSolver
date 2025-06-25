@@ -7,10 +7,17 @@
 
 import Foundation
 
-class Card{
+@Observable
+class Card: Identifiable, Equatable {
+    let id = UUID()
+    
     var unknownPlayers = Array<Player>()
     var noPlayers = Array<Player>()
     var yesPlayers = Array<Player>()
+    
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        lhs.id == rhs.id
+    }
     
 }
 

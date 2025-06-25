@@ -1,15 +1,15 @@
 //
-//  AddPlayersStripped.swift
+//  AddWeaponsView.swift
 //  ClueSolver
 //
-//  Created by Talmage Gaisford on 6/23/25.
+//  Created by Talmage Gaisford on 6/24/25.
 //
 
 import SwiftUI
 
-struct AddPlayersStripped: View {
+struct AddWeaponsView: View {
     var game: Game
-    @State private var newPlayerName = ""
+    @State private var newWeaponName = ""
     @FocusState private var isFocused: Bool
         
     var body: some View {
@@ -17,15 +17,13 @@ struct AddPlayersStripped: View {
             
             VStack {
                 FlowLayout {
-                    ForEach(game.players) { player in
-                        Text(player.playerName)
+                    ForEach(game.weapons) { weapon in
+                        Text(weapon.weaponName)
                             .padding()
-                            .background(player.color)
-                            .foregroundColor(.white)
                             .cornerRadius(10)
                             .onLongPressGesture {
-                                if let index = game.players.firstIndex(of: player) {
-                                    game.players.remove(at: index)
+                                if let index = game.weapons.firstIndex(of: weapon) {
+                                    game.weapons.remove(at: index)
                                 }
                                 let generator = UIImpactFeedbackGenerator(style: .medium)
                                     generator.impactOccurred()
@@ -34,14 +32,14 @@ struct AddPlayersStripped: View {
                     }
                 }
                 Spacer()
-                TextField("Player Name", text: $newPlayerName)
+                TextField("Weapon Name", text: $newWeaponName)
                     .textFieldStyle(.roundedBorder)
                     .padding()
                     .autocorrectionDisabled(true)
                     .focused($isFocused)
                     .onSubmit{
-                        addNewPlayer()
-                        newPlayerName = ""
+                        addNewWeapon()
+                        newWeaponName = ""
                         isFocused = true
                     }
                 Spacer()
@@ -52,12 +50,12 @@ struct AddPlayersStripped: View {
         }
         .navigationTitle(Text("Add Players"))
     }
-    private func addNewPlayer() {
-           guard !newPlayerName.trimmingCharacters(in: .whitespaces).isEmpty else { return }
-        game.cardManager.addPlayer(playerName: newPlayerName.trimmingCharacters(in: .whitespaces))
+    private func addNewWeapon() {
+           guard !newWeaponName.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        game.cardManager.addWeapon(weaponName: newWeaponName.trimmingCharacters(in: .whitespaces))
        }
 }
 
 #Preview {
-    AddPlayersStripped(game: Game())
+    AddWeaponsView(game: Game())
 }

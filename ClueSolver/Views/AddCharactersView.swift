@@ -1,15 +1,15 @@
 //
-//  AddPlayersStripped.swift
+//  AddCharactersView.swift
 //  ClueSolver
 //
-//  Created by Talmage Gaisford on 6/23/25.
+//  Created by Talmage Gaisford on 6/24/25.
 //
 
 import SwiftUI
 
-struct AddPlayersStripped: View {
+struct AddCharactersView: View {
     var game: Game
-    @State private var newPlayerName = ""
+    @State private var newCharacterName = ""
     @FocusState private var isFocused: Bool
         
     var body: some View {
@@ -17,15 +17,13 @@ struct AddPlayersStripped: View {
             
             VStack {
                 FlowLayout {
-                    ForEach(game.players) { player in
-                        Text(player.playerName)
+                    ForEach(game.characters) { character in
+                        Text(character.characterName)
                             .padding()
-                            .background(player.color)
-                            .foregroundColor(.white)
                             .cornerRadius(10)
                             .onLongPressGesture {
-                                if let index = game.players.firstIndex(of: player) {
-                                    game.players.remove(at: index)
+                                if let index = game.characters.firstIndex(of: character) {
+                                    game.characters.remove(at: index)
                                 }
                                 let generator = UIImpactFeedbackGenerator(style: .medium)
                                     generator.impactOccurred()
@@ -34,14 +32,14 @@ struct AddPlayersStripped: View {
                     }
                 }
                 Spacer()
-                TextField("Player Name", text: $newPlayerName)
+                TextField("Character Name", text: $newCharacterName)
                     .textFieldStyle(.roundedBorder)
                     .padding()
                     .autocorrectionDisabled(true)
                     .focused($isFocused)
                     .onSubmit{
-                        addNewPlayer()
-                        newPlayerName = ""
+                        addNewCharacter()
+                        newCharacterName = ""
                         isFocused = true
                     }
                 Spacer()
@@ -52,12 +50,12 @@ struct AddPlayersStripped: View {
         }
         .navigationTitle(Text("Add Players"))
     }
-    private func addNewPlayer() {
-           guard !newPlayerName.trimmingCharacters(in: .whitespaces).isEmpty else { return }
-        game.cardManager.addPlayer(playerName: newPlayerName.trimmingCharacters(in: .whitespaces))
+    private func addNewCharacter() {
+           guard !newCharacterName.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        game.cardManager.addCharacter(characterName: newCharacterName.trimmingCharacters(in: .whitespaces))
        }
 }
 
 #Preview {
-    AddPlayersStripped(game: Game())
+    AddCharactersView(game: Game())
 }

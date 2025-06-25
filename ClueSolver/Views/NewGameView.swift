@@ -8,11 +8,35 @@
 import SwiftUI
 
 struct NewGameView: View {
+    var game: Game
+    @State private var selectedTab: NavTab = .playersTab
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
+        VStack(spacing: 0) {
+                    NewGameNavBar(selectedTab: $selectedTab)
+                        .padding(.top, 50) // If you want space for status bar/safe area
+                        .background(Color(.systemBackground))
+                        .zIndex(1) // Keep it above the content
+                    
+                    Divider()
+                    
+                    Group {
+                        switch selectedTab {
+                        case .playersTab:
+                            AddPlayersStripped(game: game)
+                        case .charactersTab:
+                            AddCharactersView(game: game)
+                        case .weaponsTab:
+                            AddWeaponsView(game: game)
+                        case .roomsTab:
+                            AddRoomsView(game: game)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+                .ignoresSafeArea(.keyboard) // Keeps layout from shifting when keyboard appears
+            }
+        }
 #Preview {
-    NewGameView()
+    NewGameView(game: Game())
 }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    private var game: Game = Game()
     
     var body: some View {
         NavigationStack {
@@ -31,7 +30,7 @@ struct ContentView: View {
                     Spacer()
                     
                     
-                    NavigationLink(destination: AddPlayersStripped(game: game)) {
+                    NavigationLink(destination: NewGameView(game: Game())) {
                         Text("Start New Game")
                             .font(.title2)
                             .padding()
@@ -42,7 +41,7 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    NavigationLink(destination: NewGameView()) {
+                    NavigationLink(destination: NewGameView(game: Game())) {
                         Text("Resume Game")
                             .font(.title2)
                             .padding()

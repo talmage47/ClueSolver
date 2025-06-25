@@ -14,8 +14,8 @@ class Player: Identifiable, Equatable {
     var playerName: String
     var color: Color
 
-    init(name: String, color: Color) {
-        self.playerName = name
+    init(playerName: String, color: Color) {
+        self.playerName = playerName
         self.color = color
     }
 

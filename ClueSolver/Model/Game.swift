@@ -9,11 +9,16 @@ import Foundation
 
 @Observable
 class Game {
-    @Published var players: [Player] = []
-    var playerManager: PlayerManager = PlayerManager(self)
+    var players: [Player] = []
+    var characters: [Character] = []
+    var weapons: [Weapon] = []
+    var rooms: [Room] = []
+    
+    var cardManager: CardManager!
+    
+    
+    init() {
+        self.cardManager = CardManager(game: self)
+    }
 
-    
-
-    
-    
 }
