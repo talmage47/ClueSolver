@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class Card: Identifiable, Equatable {
+class Card: Identifiable, Equatable, Hashable {
     let id = UUID()
     
     var unknownPlayers = Array<Player>()
@@ -18,10 +18,13 @@ class Card: Identifiable, Equatable {
     static func == (lhs: Card, rhs: Card) -> Bool {
         lhs.id == rhs.id
     }
+    func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
     
 }
 
-class Character: Card{
+class GameCharacter: Card{
     var characterName: String
     
     init(characterName: String) {

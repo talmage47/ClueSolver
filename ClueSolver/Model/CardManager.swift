@@ -18,12 +18,7 @@ class CardManager: ObservableObject {
     }
 
     func addPlayer(playerName: String) {
-        if colorPool.isEmpty {
-            colorPool = [.red, .green, .blue, .orange, .purple, .yellow].shuffled()
-        }
-
-        let color = colorPool.removeFirst()
-        let player = Player(playerName: playerName, color: color)
+        let player = Player(playerName: playerName)
         game.players.append(player)
     }
     
@@ -32,7 +27,7 @@ class CardManager: ObservableObject {
     }
     
     func addCharacter(characterName: String) {
-        let character = Character(characterName: characterName)
+        let character = GameCharacter(characterName: characterName)
         game.characters.append(character)
     }
     

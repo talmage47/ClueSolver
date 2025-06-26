@@ -10,7 +10,7 @@ import Foundation
 @Observable
 class Game {
     var players: [Player] = []
-    var characters: [Character] = []
+    var characters: [GameCharacter] = []
     var weapons: [Weapon] = []
     var rooms: [Room] = []
     

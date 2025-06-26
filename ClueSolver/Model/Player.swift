@@ -12,11 +12,9 @@ import SwiftUI
 class Player: Identifiable, Equatable {
     let id = UUID()
     var playerName: String
-    var color: Color
 
-    init(playerName: String, color: Color) {
+    init(playerName: String) {
         self.playerName = playerName
-        self.color = color
     }
 
     static func == (lhs: Player, rhs: Player) -> Bool {

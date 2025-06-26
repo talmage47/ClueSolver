@@ -9,7 +9,7 @@ import Foundation
 
 class Guess {
     var guesser: Player
-    var character: Character
+    var character: GameCharacter
     var weapon: Weapon
     var room: Room
     var disprover: Player?
@@ -18,7 +18,7 @@ class Guess {
         disprover != nil
     }
     
-    init(guesser: Player, character: Character, weapon: Weapon, room: Room, disprover: Player?) {
+    init(guesser: Player, character: GameCharacter, weapon: Weapon, room: Room, disprover: Player?) {
         self.guesser = guesser
         self.character = character
         self.weapon = weapon

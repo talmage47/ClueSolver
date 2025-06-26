@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct FlowLayout: Layout {
+    var spacing: CGSize = CGSize(width: 8, height: 8) // Customize spacing here
+
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         var size = CGSize.zero
         var rowHeight: CGFloat = 0
@@ -17,17 +19,20 @@ struct FlowLayout: Layout {
 
         for subview in subviews {
             let subviewSize = subview.sizeThatFits(.unspecified)
+
             if x + subviewSize.width > maxWidth {
                 x = 0
-                y += rowHeight
+                y += rowHeight + spacing.height
                 rowHeight = 0
             }
-            x += subviewSize.width
+
+            x += subviewSize.width + spacing.width
             rowHeight = max(rowHeight, subviewSize.height)
         }
 
         size.width = maxWidth
         size.height = y + rowHeight
+
         return size
     }
 
@@ -41,12 +46,12 @@ struct FlowLayout: Layout {
 
             if x + size.width > bounds.maxX {
                 x = bounds.minX
-                y += rowHeight
+                y += rowHeight + spacing.height
                 rowHeight = 0
             }
 
             subview.place(at: CGPoint(x: x, y: y), proposal: ProposedViewSize(width: size.width, height: size.height))
-            x += size.width
+            x += size.width + spacing.width
             rowHeight = max(rowHeight, size.height)
         }
     }

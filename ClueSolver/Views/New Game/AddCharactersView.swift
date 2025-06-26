@@ -1,0 +1,65 @@
+//
+//  AddCharactersView.swift
+//  ClueSolver
+//
+//  Created by Talmage Gaisford on 6/24/25.
+//
+
+import SwiftUI
+
+struct AddCharactersView: View {
+    var game: Game
+    @State private var newCharacterName = ""
+    @FocusState private var isFocused: Bool
+        
+    var body: some View {
+        ZStack {
+            
+            VStack {
+                FlowLayout {
+                    ForEach(game.characters) { character in
+                        Text(character.characterName)
+                            .padding()
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(style: StrokeStyle(lineWidth: 2))
+                            )
+                            .onLongPressGesture {
+                                if let index = game.characters.firstIndex(of: character) {
+                                    game.characters.remove(at: index)
+                                }
+                                let generator = UIImpactFeedbackGenerator(style: .medium)
+                                    generator.impactOccurred()
+                                    
+                            }
+                    }
+                }
+                Spacer()
+                TextField("Character Name", text: $newCharacterName)
+                    .textFieldStyle(.roundedBorder)
+                    .padding()
+                    .autocorrectionDisabled(true)
+                    .focused($isFocused)
+                    .onSubmit{
+                        addNewCharacter()
+                        newCharacterName = ""
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                                isFocused = true
+                            }
+                    }
+            }
+            .onAppear {
+                isFocused = true
+            }
+        }
+        .navigationTitle(Text("Add Characters"))
+    }
+    private func addNewCharacter() {
+           guard !newCharacterName.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        game.cardManager.addCharacter(characterName: newCharacterName.trimmingCharacters(in: .whitespaces))
+       }
+}
+
+#Preview {
+    AddCharactersView(game: Game())
+}
