@@ -15,6 +15,8 @@ class Card: Identifiable, Equatable, Hashable {
     var noPlayers = Array<Player>()
     var yesPlayers = Array<Player>()
     
+    var cardName: String?
+    
     static func == (lhs: Card, rhs: Card) -> Bool {
         lhs.id == rhs.id
     }
@@ -30,6 +32,7 @@ class GameCharacter: Card{
     init(characterName: String) {
         self.characterName = characterName
         super.init()
+        self.cardName = characterName
     }
 }
 
@@ -39,6 +42,7 @@ class Weapon: Card{
     init(weaponName: String) {
         self.weaponName = weaponName
         super.init()
+        self.cardName = weaponName
     }
     
 }
@@ -49,6 +53,7 @@ class Room: Card{
     init(roomName: String) {
         self.roomName = roomName
         super.init()
+        self.cardName = roomName
     }
     
 }

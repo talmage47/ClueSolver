@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NewGameView: View {
     var game: Game
-    @State private var selectedTab: NavTab = .playersTab
+    @State private var selectedTab: NewGameNavTab = .playersTab
     var allCardsAdded: Bool {
         !game.players.isEmpty && !game.characters.isEmpty && !game.weapons.isEmpty && !game.rooms.isEmpty
         }
@@ -17,7 +17,6 @@ struct NewGameView: View {
     var body: some View {
         VStack(spacing: 0) {
             NewGameNavBar(selectedTab: $selectedTab)
-                .padding(.top, 50)
                 .background(Color(.systemBackground))
                 .zIndex(1)
     
@@ -34,14 +33,14 @@ struct NewGameView: View {
             
             Group {
                 switch selectedTab {
-                case .playersTab:
-                    AddPlayersStripped(game: game)
-                case .charactersTab:
-                    AddCharactersView(game: game)
-                case .weaponsTab:
-                    AddWeaponsView(game: game)
-                case .roomsTab:
-                    AddRoomsView(game: game)
+                    case .playersTab:
+                        AddPlayersStripped(game: game)
+                    case .charactersTab:
+                        AddCharactersView(game: game)
+                    case .weaponsTab:
+                        AddWeaponsView(game: game)
+                    case .roomsTab:
+                        AddRoomsView(game: game)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

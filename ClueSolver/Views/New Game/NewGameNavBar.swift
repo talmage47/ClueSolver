@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-enum NavTab {
+enum NewGameNavTab {
     case playersTab, charactersTab, weaponsTab, roomsTab
 }
 
 struct NewGameNavBar: View {
-    @Binding var selectedTab: NavTab
+    @Binding var selectedTab: NewGameNavTab
        
        var body: some View {
            HStack {
-               tabItem(tab: .playersTab, systemImage: "person.fill")
+               tabItem(tab: .playersTab, systemImage: "person.3.fill")
                Spacer()
                tabItem(tab: .charactersTab, systemImage: "hat.widebrim.fill")
                Spacer()
@@ -27,7 +27,7 @@ struct NewGameNavBar: View {
            .padding(.horizontal)
        }
        
-       func tabItem(tab: NavTab, systemImage: String) -> some View {
+       func tabItem(tab: NewGameNavTab, systemImage: String) -> some View {
            Button(action: {
                selectedTab = tab
            }) {

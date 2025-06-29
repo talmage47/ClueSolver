@@ -14,6 +14,8 @@ class Game {
     var weapons: [Weapon] = []
     var rooms: [Room] = []
     
+    var userCards: [Card] = []
+    
     var cardManager: CardManager!
     
     
