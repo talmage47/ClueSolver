@@ -14,6 +14,7 @@ class Card: Identifiable, Equatable, Hashable {
     var unknownPlayers = Array<Player>()
     var noPlayers = Array<Player>()
     var yesPlayers = Array<Player>()
+    var isPossibleSolution: Bool = true
     
     var cardName: String?
     

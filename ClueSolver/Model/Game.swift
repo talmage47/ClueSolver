@@ -14,13 +14,16 @@ class Game {
     var weapons: [Weapon] = []
     var rooms: [Room] = []
     
-    var userCards: [Card] = []
+    var userCards: Set<Card> = []
+    var communityCards: Set<Card> = []
     
     var cardManager: CardManager!
+    var deductionEngine: DeductionEngine!
     
     
     init() {
         self.cardManager = CardManager(game: self)
+        self.deductionEngine = DeductionEngine(game: self)
     }
 
 }

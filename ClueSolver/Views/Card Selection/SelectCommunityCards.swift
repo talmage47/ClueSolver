@@ -55,7 +55,7 @@ struct SelectCommunityCards: View {
     
     @ViewBuilder
     func selectableCardView(for card: Card) -> some View {
-        let isSelected = selectedItems.contains(card)
+        let isSelected = game.communityCards.contains(card)
 
         Text(card.cardName ?? "No Name")
             .padding(10)
@@ -68,12 +68,12 @@ struct SelectCommunityCards: View {
     }
     
     private func toggleSelection(of item: Card) {
-            if selectedItems.contains(item) {
-                selectedItems.remove(item)
-            } else {
-                selectedItems.insert(item)
-            }
+        if game.communityCards.contains(item) {
+            game.communityCards.remove(item)
+        } else {
+            game.communityCards.insert(item)
         }
+    }
 }
 
 #Preview {
