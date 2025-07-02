@@ -8,7 +8,9 @@
 import Foundation
 
 @Observable
-class Game {
+class Game: Hashable {
+    let id = UUID()
+    
     var players: [Player] = []
     var characters: [GameCharacter] = []
     var weapons: [Weapon] = []
@@ -26,4 +28,10 @@ class Game {
         self.deductionEngine = DeductionEngine(game: self)
     }
 
+    static func == (lhs: Game, rhs: Game) -> Bool {
+        lhs.id == rhs.id
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }

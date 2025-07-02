@@ -7,17 +7,26 @@
 
 import SwiftUI
 
+enum Route: Hashable {
+    case newGame(Game)
+    case cardSelector(Game)
+    case loadPreset
+    case loadSavedGame
+}
+
 struct HomeView: View {
+    var model: Model
+    @State private var navPath = NavigationPath()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navPath) {
             ZStack {
                 Image("mansion1")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
                 
-                VStack {
+                VStack() {
                     
                     Text("Clue Solver")
                         .font(.system(size: 48, weight: .bold))
@@ -27,31 +36,76 @@ struct HomeView: View {
                         .ignoresSafeArea(edges: .horizontal)
                     
                     Spacer()
-                    Spacer()
                     
-                    
-                    NavigationLink(destination: NewGameView(game: Game())) {
-                        Text("Start New Game")
-                            .font(.title2)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                    Button("Start New Game") {
+                        navPath.append(Route.newGame(Game()))
                     }
+                    .buttonStyle(HomeButtonStyle())
                     
                     Spacer()
                     
-                    NavigationLink(destination: NewGameView(game: Game())) {
-                        Text("Resume Game")
-                            .font(.title2)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                    Button("Load Game Preset") {
+                        navPath.append(Route.loadPreset)
                     }
+                    .buttonStyle(HomeButtonStyle())
+
+                    Spacer()
+                    
+                    Button("Load Saved Game") {
+                        navPath.append(Route.loadSavedGame)
+                    }
+                    .buttonStyle(HomeButtonStyle())
                     
                     Spacer()
                 }
+                .navigationDestination(for: Route.self) { route in
+                    switch route {
+                    case .newGame(let game):
+                        NewGameView(game: game, navPath: $navPath)
+                    case .cardSelector(let game):
+                        CardSelectorView(game: game, navPath: $navPath, onComplete: { game in model.startNewGame(newGame: game)})
+                    case .loadPreset:
+                        LoadPresetView(navPath: $navPath)
+                    case .loadSavedGame:
+                        LoadSavedGameView(navPath: $navPath)
+                    }
+                }
+//                VStack {
+//                    
+//                    Text("Clue Solver")
+//                        .font(.system(size: 48, weight: .bold))
+//                        .foregroundColor(.black)
+//                        .frame(maxWidth: .infinity)
+//                        .padding()
+//                        .ignoresSafeArea(edges: .horizontal)
+//                    
+//                    Spacer()
+//                    Spacer()
+//                    
+//                    
+//                    NavigationLink(destination: NewGameView(game: Game())) {
+//                        Text("Start New Game")
+//                            .font(.title2)
+//                            .padding()
+//                            .background(Color.blue)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(10)
+//                    }
+//                    
+//                    Spacer()
+//                    
+//                    NavigationLink(destination: NewGameView(game: Game(), onComplete: { game in
+//                        model.startNewGame(newGame: game)})) {
+//                        Text("Resume Game")
+//                            .font(.title2)
+//                            .padding()
+//                            .background(Color.blue)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(10)
+//                    }
+//                    
+//                    Spacer()
+//                }
                 .padding()
             }
         }
@@ -59,6 +113,18 @@ struct HomeView: View {
     }
 }
 
+struct HomeButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.title2)
+            .padding()
+            .background(Color.blue.opacity(configuration.isPressed ? 0.7 : 1))
+            .foregroundColor(.white)
+            .cornerRadius(10)
+            .padding(.horizontal)
+    }
+}
+
 #Preview {
-    HomeView()
+    HomeView(model: Model())
 }

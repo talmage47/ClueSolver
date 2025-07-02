@@ -6,3 +6,18 @@
 //
 
 import Foundation
+
+@Observable
+class Model {
+    static let shared = Model()
+    
+    var savedGames: Set<Game> = []
+    var currentGame: Game?
+    
+    func startNewGame(newGame: Game) {
+        savedGames.insert(newGame)
+        currentGame = newGame
+    }
+    
+}
+

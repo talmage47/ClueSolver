@@ -22,8 +22,8 @@ class Card: Identifiable, Equatable, Hashable {
         lhs.id == rhs.id
     }
     func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
-        }
+        hasher.combine(id)
+    }
     
 }
 

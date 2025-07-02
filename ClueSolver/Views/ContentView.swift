@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    private var model = Model.shared
+    
     var body: some View {
         TabView {
-            HomeView()
+            HomeView(model: model)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
