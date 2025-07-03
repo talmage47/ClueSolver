@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SelectCommunityCards: View {
     var game: Game
-    @State private var selectedItems: Set<Card> = []
     
     var body: some View {
         ZStack{

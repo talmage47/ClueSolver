@@ -17,17 +17,17 @@ struct ContentView: View {
                     Label("Home", systemImage: "house")
                 }
 
-            TurnView()
+            TurnTabView(model: model)
                 .tabItem {
                     Label("Turn", systemImage: "person.crop.badge.magnifyingglass.fill")
                 }
 
-            GuessView()
+            GuessTabView(model: model)
                 .tabItem {
                     Label("Guess", systemImage: "magnifyingglass")
                 }
             
-            HistoryView()
+            HistoryTabView(model: model)
                 .tabItem {
                     Label("History", systemImage: "list.bullet")
                 }

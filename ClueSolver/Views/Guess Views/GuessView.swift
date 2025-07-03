@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct GuessView: View {
+    var game: Game
+    
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
 #Preview {
-    GuessView()
+    GuessView(game: Game())
 }
