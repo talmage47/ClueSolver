@@ -8,16 +8,28 @@
 import Foundation
 import SwiftUI
 
+
 @Observable
-class Player: Identifiable, Equatable {
+class GameObject: Identifiable, Equatable, Hashable {
     let id = UUID()
+    var gameObjectName: String?
+
+    static func == (lhs: GameObject, rhs: GameObject) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
+
+class Player: GameObject{
     var playerName: String
 
     init(playerName: String) {
         self.playerName = playerName
-    }
-
-    static func == (lhs: Player, rhs: Player) -> Bool {
-        lhs.id == rhs.id
+        super.init()
+        self.gameObjectName = playerName
     }
 }

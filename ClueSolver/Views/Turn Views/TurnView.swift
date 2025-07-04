@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TurnView: View {
     var game: Game
+    var currentGuess: Guess
     
     var body: some View {
         ZStack{
@@ -19,7 +20,7 @@ struct TurnView: View {
                     .font(.title2)
                 FlowLayout {
                     ForEach(game.characters) { character in
-                        selectableCardView(for: character)
+                        selectableObjectView(for: character)
                     }
                 }
                 
@@ -31,7 +32,7 @@ struct TurnView: View {
                     .font(.title2)
                 FlowLayout {
                     ForEach(game.weapons) { weapon in
-                        selectableCardView(for: weapon)
+                        selectableObjectView(for: weapon)
                     }
                 }
                 Spacer()
@@ -42,7 +43,7 @@ struct TurnView: View {
                     .font(.title2)
                 FlowLayout {
                     ForEach(game.rooms) { room in
-                        selectableCardView(for: room)
+                        selectableObjectView(for: room)
                     }
                 }
                 
@@ -53,20 +54,20 @@ struct TurnView: View {
     }
     
     @ViewBuilder
-    func selectableCardView(for card: Card) -> some View {
-        let isSelected = game.userCards.contains(card)
+    func selectableObjectView(for gameObject: GameObject) -> some View {
+        let isSelected = game.userCards.contains(gameObject)
 
-        Text(card.cardName ?? "No Name")
+        Text(gameObject.cardName ?? "No Name")
             .padding(10)
             .background(isSelected ? Color.blue : Color.gray.opacity(0.3))
             .foregroundColor(isSelected ? .white : .black)
             .cornerRadius(8)
             .onTapGesture {
-                toggleSelection(of: card)
+                toggleSelection(of: gameObject)
             }
     }
     
-    private func toggleSelection(of item: Card) {
+    private func toggleSelection(of item: GameObject) {
         if game.userCards.contains(item) {
             game.userCards.remove(item)
         } else {
