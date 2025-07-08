@@ -37,4 +37,9 @@ class Game: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
+    
+    func confirmNewGuess() {
+        guessRecord.append(currentGuess)
+        currentGuess = Guess()
+    }
 }

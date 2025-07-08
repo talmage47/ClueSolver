@@ -10,6 +10,9 @@ import SwiftUI
 struct TurnView: View {
     var game: Game
     @State var currentGuess: Guess = Guess()
+    var allSelectionsMade: Bool {
+        (currentGuess.guesser != nil) && (currentGuess.character != nil) && (currentGuess.weapon != nil) && (currentGuess.room != nil) && (currentGuess.disprover != nil)
+        }
     
     var body: some View {
         ZStack{
@@ -69,7 +72,49 @@ struct TurnView: View {
                             }
                     }
                 }
+                
+                Text("Select Passers")
+                FlowLayout {
+                    ForEach(game.players) { player in
+                        Text(player.playerName)
+                            .padding(10)
+                            .background(currentGuess.disprover?.id == player.id ? Color.blue : Color.gray.opacity(0.3))
+                            .foregroundColor(currentGuess.disprover?.id == player.id ? .white : .black)
+                            .cornerRadius(8)
+                            .onTapGesture {
+                                if currentGuess.passers.contains(player) {
+                                    currentGuess.passers.remove(player)
+                                } else {
+                                    currentGuess.passers.insert(player)
+                                }
+                            }
+                    }
+                }
+                Text("Select Disprover")
+                FlowLayout {
+                    ForEach(game.players) { player in
+                        Text(player.playerName)
+                            .padding(10)
+                            .background(currentGuess.disprover?.id == player.id ? Color.blue : Color.gray.opacity(0.3))
+                            .foregroundColor(currentGuess.disprover?.id == player.id ? .white : .black)
+                            .cornerRadius(8)
+                            .onTapGesture {
+                                currentGuess.disprover = player
+                            }
+                    }
+                }
+                
+                Button("Continue") {
+                    game.confirmNewGuess()
+                }
+                .padding()
+                .background(allSelectionsMade ? Color.blue : Color.gray)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                .disabled(!allSelectionsMade)
+                .padding()
             }
+            .padding()
         }
         .navigationTitle(Text("Select Your Cards"))
     }
