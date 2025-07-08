@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SelectCommunityCards: View {
-    var game: Game
+    @Bindable var game: Game
     
     var body: some View {
         ZStack{

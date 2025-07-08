@@ -30,6 +30,10 @@ class GameCharacter: Card{
     }
 }
 
+extension GameCharacter: SelectableGameObject {
+    var displayName: String { characterName }
+}
+
 class Weapon: Card{
     var weaponName: String
     
@@ -41,6 +45,10 @@ class Weapon: Card{
     
 }
 
+extension Weapon: SelectableGameObject {
+    var displayName: String { weaponName }
+}
+
 class Room: Card{
     var roomName: String
     
@@ -49,5 +57,8 @@ class Room: Card{
         super.init()
         self.cardName = roomName
     }
-    
+}
+
+extension Room: SelectableGameObject {
+    var displayName: String { roomName }
 }

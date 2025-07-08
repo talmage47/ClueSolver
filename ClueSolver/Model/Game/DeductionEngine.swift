@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DeductionEngine: ObservableObject {
+class DeductionEngine {
     
     var game: Game
     

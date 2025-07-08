@@ -19,6 +19,9 @@ class Game: Hashable {
     var userCards: Set<Card> = []
     var communityCards: Set<Card> = []
     
+    var currentGuess: Guess = Guess()
+    var guessRecord: [Guess] = []
+    
     var cardManager: CardManager!
     var deductionEngine: DeductionEngine!
     

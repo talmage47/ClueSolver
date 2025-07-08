@@ -9,20 +9,6 @@ import Foundation
 import SwiftUI
 
 
-@Observable
-class GameObject: Identifiable, Equatable, Hashable {
-    let id = UUID()
-    var gameObjectName: String?
-
-    static func == (lhs: GameObject, rhs: GameObject) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-}
-
 
 class Player: GameObject{
     var playerName: String
@@ -32,4 +18,8 @@ class Player: GameObject{
         super.init()
         self.gameObjectName = playerName
     }
+}
+
+extension Player: SelectableGameObject {
+    var displayName: String { playerName }
 }
