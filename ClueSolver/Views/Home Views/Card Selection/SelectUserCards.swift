@@ -17,11 +17,7 @@ struct SelectUserCards: View {
                 
                 Text("Characters")
                     .font(.title2)
-                FlowLayout {
-                    ForEach(game.characters) { character in
-                        selectableCardView(for: character)
-                    }
-                }
+                MultipleSelectionView(selectableItems: game.characters, selectedItems: $game.communityCards)
                 
                 Spacer()
                 Divider()
@@ -29,22 +25,15 @@ struct SelectUserCards: View {
                 
                 Text("Weapons")
                     .font(.title2)
-                FlowLayout {
-                    ForEach(game.weapons) { weapon in
-                        selectableCardView(for: weapon)
-                    }
-                }
+                MultipleSelectionView(selectableItems: game.weapons, selectedItems: $game.communityCards)
+                
                 Spacer()
                 Divider()
                 Spacer()
                 
                 Text("Rooms")
                     .font(.title2)
-                FlowLayout {
-                    ForEach(game.rooms) { room in
-                        selectableCardView(for: room)
-                    }
-                }
+                MultipleSelectionView(selectableItems: game.rooms, selectedItems: $game.communityCards)
                 
                 Spacer()
             }
@@ -52,27 +41,6 @@ struct SelectUserCards: View {
         .navigationTitle(Text("Select Your Cards"))
     }
     
-    @ViewBuilder
-    func selectableCardView(for card: Card) -> some View {
-        let isSelected = game.userCards.contains(card)
-
-        Text(card.cardName ?? "No Name")
-            .padding(10)
-            .background(isSelected ? Color.blue : Color.gray.opacity(0.3))
-            .foregroundColor(isSelected ? .white : .black)
-            .cornerRadius(8)
-            .onTapGesture {
-                toggleSelection(of: card)
-            }
-    }
-    
-    private func toggleSelection(of item: Card) {
-        if game.userCards.contains(item) {
-            game.userCards.remove(item)
-        } else {
-            game.userCards.insert(item)
-        }
-    }
 }
 
 #Preview {

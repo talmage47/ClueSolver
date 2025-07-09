@@ -13,11 +13,15 @@ class Guess {
     var character: GameCharacter?
     var weapon: Weapon?
     var room: Room?
-    var passers: [Player]?
+    var passers: Set<Player>
     var disprover: Player?
     
     var isDisproved: Bool {
         disprover != nil
+    }
+    
+    init() {
+        passers = []
     }
 }
 

@@ -8,57 +8,48 @@
 import Foundation
 
 @Observable
-class Card: GameObject{
-    
-    var unknownPlayers = Array<Player>()
-    var noPlayers = Array<Player>()
-    var yesPlayers = Array<Player>()
-    var isPossibleSolution: Bool = true
-    
-    var cardName: String?
-    
+class Card: Identifiable, Equatable, Hashable, SelectableObject {
+    let id = UUID()
+    var cardName: String
+
+    init(cardName: String) {
+        self.cardName = cardName
+    }
+
+    var displayName: String { cardName }
+
+    static func == (lhs: Card, rhs: Card) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
 
-class GameCharacter: Card{
+class GameCharacter: Card {
     var characterName: String
-    
+
     init(characterName: String) {
         self.characterName = characterName
-        super.init()
-        self.cardName = characterName
-        self.gameObjectName = characterName
+        super.init(cardName: characterName)
     }
 }
 
-extension GameCharacter: SelectableGameObject {
-    var displayName: String { characterName }
-}
-
-class Weapon: Card{
+class Weapon: Card {
     var weaponName: String
-    
+
     init(weaponName: String) {
         self.weaponName = weaponName
-        super.init()
-        self.cardName = weaponName
+        super.init(cardName: weaponName)
     }
-    
 }
 
-extension Weapon: SelectableGameObject {
-    var displayName: String { weaponName }
-}
-
-class Room: Card{
+class Room: Card {
     var roomName: String
-    
+
     init(roomName: String) {
         self.roomName = roomName
-        super.init()
-        self.cardName = roomName
+        super.init(cardName: roomName)
     }
-}
-
-extension Room: SelectableGameObject {
-    var displayName: String { roomName }
 }
