@@ -21,7 +21,11 @@ struct SingleSelectionView<specificSelectableObject: SelectableObject>: View {
                         .foregroundColor(selectedItem?.id == item.id ? .white : .black)
                         .cornerRadius(8)
                         .onTapGesture {
-                            selectedItem = item
+                            if selectedItem?.id == item.id {
+                                selectedItem = nil
+                            } else {
+                                selectedItem = item
+                            }
                         }
                 }
             }

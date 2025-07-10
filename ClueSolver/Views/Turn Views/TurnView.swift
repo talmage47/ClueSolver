@@ -8,35 +8,21 @@
 import SwiftUI
 
 struct TurnView: View {
-    var game: Game
-    @State var currentGuess: Guess = Guess()
+    @Bindable var game: Game
+    @State var currentGuess: Guess = Guess(userGuess: false)
     var allSelectionsMade: Bool {
-        (currentGuess.guesser != nil) && (currentGuess.character != nil) && (currentGuess.weapon != nil) && (currentGuess.room != nil)
+        ((currentGuess.userGuess == true) || (currentGuess.guesser != nil)) && (currentGuess.character != nil) && (currentGuess.weapon != nil) && (currentGuess.room != nil) && ((allPassed(set: currentGuess.passers, array: game.players, exclusion: currentGuess.guesser!)) || (currentGuess.disprover != nil)) && (currentGuess.guesser != currentGuess.disprover) && (!currentGuess.passers.contains(currentGuess.guesser!)) && (!currentGuess.passers.contains(currentGuess.disprover!))
         }
+    
     
     var body: some View {
         ZStack{
-            VStack{
-                Text("Select Guesser")
-                SingleSelectionView(selectableItems: game.players, selectedItem: $currentGuess.guesser)
-                
-                Text("Select Character")
-                SingleSelectionView(selectableItems: game.characters, selectedItem: $currentGuess.character)
-                
-                Text("Select Weapon")
-                SingleSelectionView(selectableItems: game.weapons, selectedItem: $currentGuess.weapon)
-                
-                Text("Select Room")
-                SingleSelectionView(selectableItems: game.rooms, selectedItem: $currentGuess.room)
-                
-                Text("Select Passers")
-                MultipleSelectionView(selectableItems: game.players, selectedItems: $currentGuess.passers)
-                
-                Text("Select Disprover")
-                SingleSelectionView(selectableItems: game.players, selectedItem: $currentGuess.disprover)
+            ScrollView{
+                EventSelectionView(game: game, guess: currentGuess)
                 
                 Button("Confirm") {
                     game.guessRecord.append(currentGuess)
+                    currentGuess = Guess(userGuess: false)
                 }
                 .padding()
                 .background(allSelectionsMade ? Color.blue : Color.gray)
@@ -49,50 +35,52 @@ struct TurnView: View {
         }
         .navigationTitle(Text("Select Your Cards"))
     }
+    
+    func allPassed(set: Set<Player>, array: [Player], exclusion: Player) -> Bool {
+        let filteredArray = array.filter { $0 != exclusion }
+        return set.isSuperset(of: filteredArray)
+    }
 }
-
-//    @ViewBuilder
-//    func selectableObjectView<T: SelectableGameObject>(
-//        for object: T,
-//        selected: T?,
-//        onSelect: @escaping (T) -> Void
-//    ) -> some View {
-//        let isSelected = selected == object
-//
-//        Text(object.displayName)
-//            .padding(10)
-//            .background(isSelected ? Color.blue : Color.gray.opacity(0.3))
-//            .foregroundColor(isSelected ? .white : .black)
-//            .cornerRadius(8)
-//            .onTapGesture {
-//                onSelect(object)
-//            }
-//    }
-    
-    
-
 
 #Preview {
     let game: Game = {
         let game = Game()
         game.players = [
-            Player(playerName: "Talmage"),
-            Player(playerName: "Myla")
+            Player(playerName: "Matthias"),
+            Player(playerName: "Mylalala"),
+            Player(playerName: "Emily"),
+            Player(playerName: "Zachary"),
+            Player(playerName: "Megan"),
         ]
         game.characters = [
             GameCharacter(characterName: "Miss Scarlet"),
-            GameCharacter(characterName: "Colonel Mustard")
+            GameCharacter(characterName: "Colonel Mustard"),
+            GameCharacter(characterName: "Miss Peacock"),
+            GameCharacter(characterName: "Mister Green"),
+            GameCharacter(characterName: "Mrs White"),
+            GameCharacter(characterName: "Mister Plum")
         ]
         game.weapons = [
             Weapon(weaponName: "Candlestick"),
             Weapon(weaponName: "Dagger"),
-            Weapon(weaponName: "Revolver")
+            Weapon(weaponName: "Revolver"),
+            Weapon(weaponName: "Rope"),
+            Weapon(weaponName: "Pipe"),
+            Weapon(weaponName: "Wrench")
         ]
         game.rooms = [
-            Room(roomName: "Kitchen")
+            Room(roomName: "Kitchen"),
+            Room(roomName: "Bathroom"),
+            Room(roomName: "Closet"),
+            Room(roomName: "Ballroom"),
+            Room(roomName: "Mancave"),
+            Room(roomName: "Library"),
+            Room(roomName: "Dining Room"),
+            Room(roomName: "Bedroom"),
+            Room(roomName: "Conservatory")
         ]
         return game
     }()
 
-    TurnView(game: game, currentGuess: Guess())
+    TurnView(game: game, currentGuess: Guess(userGuess: false))
 }

@@ -9,6 +9,9 @@ import Foundation
 
 @Observable
 class Guess {
+    
+    var userGuess: Bool
+    
     var guesser: Player?
     var character: GameCharacter?
     var weapon: Weapon?
@@ -20,8 +23,9 @@ class Guess {
         disprover != nil
     }
     
-    init() {
-        passers = []
+    init(userGuess: Bool) {
+        self.userGuess = userGuess
+        self.passers = []
     }
 }
 
