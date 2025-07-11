@@ -16,7 +16,7 @@ struct HistoryView: View {
             Text("Guess History")
                 .font(.headline)
             ScrollView {
-                VStack(spacing: 12) {
+                LazyVStack(alignment: .leading, spacing: 12) {
                     ForEach(game.guessRecord, id: \.self) { guess in
                         SingleGuessScrollView(guess: guess)
                             .onTapGesture {
@@ -24,10 +24,11 @@ struct HistoryView: View {
                             }
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             }
             .sheet(item: $selectedGuess) { guess in
-                TurnView(game: game, currentGuess: selectedGuess!)
+                TurnView(game: game, currentGuess: guess)
                     .presentationDetents([.medium, .large])
             }
         }
@@ -46,21 +47,29 @@ struct HistoryView: View {
     // Create mock guesses
     let guess1 = Guess(userGuess: true)
     guess1.guesser = alice
-    guess1.character = GameCharacter(characterName: "Miss Scarlet")
-    guess1.weapon = Weapon(weaponName: "Revolver")
-    guess1.room = Room(roomName: "Kitchen")
+    guess1.character = GameCharacter(characterName: "Green")
+    guess1.weapon = Weapon(weaponName: "Gun")
+    guess1.room = Room(roomName: "Closet")
     guess1.passers = [bob]
     guess1.disprover = carol
 
     let guess2 = Guess(userGuess: false)
     guess2.guesser = bob
     guess2.character = GameCharacter(characterName: "Colonel Mustard")
-    guess2.weapon = Weapon(weaponName: "Wrench")
-    guess2.room = Room(roomName: "Library")
+    guess2.weapon = Weapon(weaponName: "Rope")
+    guess2.room = Room(roomName: "Ballroom")
     guess2.passers = [alice]
     // no disprover
+    
+    let guess3 = Guess(userGuess: false)
+    guess3.guesser = bob
+    guess3.character = GameCharacter(characterName: "Miss Scarlet")
+    guess3.weapon = Weapon(weaponName: "Knife")
+    guess3.room = Room(roomName: "Ballroom")
+    guess3.passers = [alice]
+    guess3.disprover = carol
 
-    game.guessRecord = [guess1, guess2]
+    game.guessRecord = [guess1, guess2, guess3]
 
     return HistoryView(game: game)
 }

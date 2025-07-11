@@ -11,8 +11,44 @@ struct TurnView: View {
     @Bindable var game: Game
     @State var currentGuess: Guess = Guess(userGuess: false)
     var allSelectionsMade: Bool {
-        ((currentGuess.userGuess == true) || (currentGuess.guesser != nil)) && (currentGuess.character != nil) && (currentGuess.weapon != nil) && (currentGuess.room != nil) && ((allPassed(set: currentGuess.passers, array: game.players, exclusion: currentGuess.guesser!)) || (currentGuess.disprover != nil)) && (currentGuess.guesser != currentGuess.disprover) && (!currentGuess.passers.contains(currentGuess.guesser!)) && (!currentGuess.passers.contains(currentGuess.disprover!))
+        guard
+            currentGuess.character != nil,
+            currentGuess.weapon != nil,
+            currentGuess.room != nil
+        else {
+            return false
         }
+
+        // Allow either userGuess OR a selected guesser
+        guard currentGuess.userGuess || currentGuess.guesser != nil else {
+            return false
+        }
+
+        // Unwrap guesser for the rest
+        guard let guesser = currentGuess.guesser else {
+            return false
+        }
+
+        // Guesser cannot be in passers
+        if currentGuess.passers.contains(guesser) {
+            return false
+        }
+
+        // List of players except the guesser
+        let allPlayersButGuesser = game.players.filter { $0 != guesser }
+        let allPassed = currentGuess.passers.isSuperset(of: allPlayersButGuesser)
+
+        // If there's a disprover, make sure it's valid
+        if let disprover = currentGuess.disprover {
+            if disprover == guesser { return false }
+            if currentGuess.passers.contains(disprover) { return false }
+        } else if !allPassed {
+            // If no disprover, require full pass
+            return false
+        }
+
+        return true
+    }
     
     
     var body: some View {

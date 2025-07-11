@@ -11,25 +11,40 @@ struct SingleGuessScrollView: View {
     var guess: Guess
     
     var body: some View {
-        ZStack {
-            VStack(alignment: .leading, spacing: 10) {
+        ZStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 5) {
                 
                 HStack {
                     Text("Guesser:")
+                        .frame(width: 80, alignment: .leading)
                     Text(guess.guesser!.playerName)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
                 }
                 HStack {
                     Text("Cards:")
-                    Text(guess.character!.characterName + ", " + guess.weapon!.weaponName + ", " + guess.room!.roomName)
+                        .frame(width: 80, alignment: .leading)
+                    Text("\(guess.character!.characterName), \(guess.weapon!.weaponName), \(guess.room!.roomName)")
+                        .multilineTextAlignment(.leading)
                 }
                 if guess.disprover != nil {
                     HStack {
                         Text("Disprover:")
-                        Text(guess.guesser!.playerName)
+                            .frame(width: 80, alignment: .leading)
+                        Text(guess.disprover!.playerName)
+                            .multilineTextAlignment(.leading)
+                    }
+                }
+                else {
+                    HStack {
+                        Text("Disprover:")
+                            .frame(width: 80, alignment: .leading)
+                        Text("Not Disproved")
                     }
                 }
             }
             .padding(15)
+            .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.white)
