@@ -8,7 +8,9 @@
 import Foundation
 
 @Observable
-class Guess {
+class Guess: Identifiable, Equatable, Hashable {
+    
+    var id = UUID()
     
     var userGuess: Bool
     
@@ -26,6 +28,14 @@ class Guess {
     init(userGuess: Bool) {
         self.userGuess = userGuess
         self.passers = []
+    }
+    
+    static func == (lhs: Guess, rhs: Guess) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 
