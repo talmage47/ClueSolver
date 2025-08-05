@@ -9,7 +9,26 @@ import SwiftUI
 
 struct TurnView: View {
     @Bindable var game: Game
-    @State var currentGuess: Guess = Guess(userGuess: false)
+    @Bindable var currentGuess: Guess   
+
+    var body: some View {
+        ScrollView {
+            EventSelectionView(game: game, guess: currentGuess)
+
+            Button("Confirm") {
+                game.guessRecord.append(currentGuess)
+                // Don't reset currentGuess — this instance is already in the record.
+            }
+            .padding()
+            .background(allSelectionsMade ? Color.blue : Color.gray)
+            .foregroundColor(.white)
+            .cornerRadius(8)
+            .disabled(!allSelectionsMade)
+        }
+        .padding()
+        .navigationTitle("Select Your Cards")
+    }
+    
     var allSelectionsMade: Bool {
         guard
             currentGuess.character != nil,
@@ -48,28 +67,6 @@ struct TurnView: View {
         }
 
         return true
-    }
-    
-    
-    var body: some View {
-        ZStack{
-            ScrollView{
-                EventSelectionView(game: game, guess: currentGuess)
-                
-                Button("Confirm") {
-                    game.guessRecord.append(currentGuess)
-                    currentGuess = Guess(userGuess: false)
-                }
-                .padding()
-                .background(allSelectionsMade ? Color.blue : Color.gray)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-                .disabled(!allSelectionsMade)
-                .padding()
-            }
-            .padding()
-        }
-        .navigationTitle(Text("Select Your Cards"))
     }
     
     func allPassed(set: Set<Player>, array: [Player], exclusion: Player) -> Bool {

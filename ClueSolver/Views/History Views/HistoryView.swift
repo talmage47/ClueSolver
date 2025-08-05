@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HistoryView: View {
     @State private var selectedGuess: Guess? = nil
+    @State private var showSheet = false
     @Bindable var game: Game
 
     var body: some View {
@@ -21,15 +22,18 @@ struct HistoryView: View {
                         SingleGuessScrollView(guess: guess)
                             .onTapGesture {
                                 selectedGuess = guess
+                                showSheet = true
                             }
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             }
-            .sheet(item: $selectedGuess) { guess in
-                TurnView(game: game, currentGuess: guess)
-                    .presentationDetents([.medium, .large])
+            .sheet(isPresented: $showSheet) {
+                if let guess = selectedGuess {
+                    TurnView(game: game, currentGuess: guess)
+                        .presentationDetents([.medium, .large])
+                }
             }
         }
     }
@@ -56,7 +60,7 @@ struct HistoryView: View {
     let guess2 = Guess(userGuess: false)
     guess2.guesser = bob
     guess2.character = GameCharacter(characterName: "Colonel Mustard")
-    guess2.weapon = Weapon(weaponName: "Rope")
+    guess2.weapon = Weapon(weaponName: "Ropey rope")
     guess2.room = Room(roomName: "Ballroom")
     guess2.passers = [alice]
     // no disprover

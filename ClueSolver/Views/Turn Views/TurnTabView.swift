@@ -12,7 +12,7 @@ struct TurnTabView: View {
 
     var body: some View {
         if let game = model.currentGame {
-            TurnView(game: game)
+            TurnView(game: game, currentGuess: Guess(userGuess: false))
         } else {
             NewGamePromptView()
         }
