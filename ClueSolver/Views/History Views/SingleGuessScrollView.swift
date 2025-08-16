@@ -46,12 +46,8 @@ struct SingleGuessScrollView: View {
             .padding(15)
             .frame(maxWidth: .infinity)
             .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray)
-                    )
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color("Foreground"))
             )
         }
     }

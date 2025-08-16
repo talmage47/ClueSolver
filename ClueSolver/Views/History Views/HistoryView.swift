@@ -12,24 +12,26 @@ struct HistoryView: View {
     @Bindable var game: Game
 
     var body: some View {
-        VStack {
-            Text("Guess History")
-                .font(.headline)
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 12) {
-                    ForEach(game.guessRecord, id: \.self) { guess in
-                        SingleGuessScrollView(guess: guess)
-                            .onTapGesture {
-                                selectedGuess = guess
-                            }
+        ZStack {
+            Color("Background").ignoresSafeArea()
+            VStack {
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 12) {
+                        ForEach(game.guessRecord, id: \.self) { guess in
+                            SingleGuessScrollView(guess: guess)
+                                .onTapGesture {
+                                    selectedGuess = guess
+                                }
+                        }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
-            }
-            .sheet(item: $selectedGuess) { guess in
-                TurnView(game: game, currentGuess: guess)
-                    .presentationDetents([.medium, .large])
+                .sheet(item: $selectedGuess) { guess in
+                    TurnView(game: game, currentGuess: guess)
+                        .presentationDetents([.medium, .large])
+                        .padding(.vertical)
+                }
             }
         }
     }

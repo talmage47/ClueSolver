@@ -45,6 +45,7 @@ struct HomeView: View {
                     Spacer()
                     
                     Button("Load Game Preset") {
+                        model.currentGame = Game.mockGame()
                         navPath.append(Route.loadPreset)
                     }
                     .buttonStyle(HomeButtonStyle())

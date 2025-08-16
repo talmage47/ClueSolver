@@ -53,6 +53,7 @@ struct TurnView: View {
     
     var body: some View {
         ZStack{
+            Color("Background").ignoresSafeArea()
             ScrollView{
                 EventSelectionView(game: game, guess: currentGuess)
                 
@@ -67,7 +68,6 @@ struct TurnView: View {
                 .disabled(!allSelectionsMade)
                 .padding()
             }
-            .padding()
         }
         .navigationTitle(Text("Select Your Cards"))
     }

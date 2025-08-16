@@ -74,7 +74,7 @@ class Game: Hashable {
             candlestick, dagger, revolver, rope, pipe, wrench
         ]
         game.rooms = [
-            kitchen, bathroom, closet, ballroom, mancave, library ,dining, bedroom, conservatory
+            kitchen, bathroom, closet, ballroom, mancave, library, dining, bedroom, conservatory
         ]
         
         let guess1 = Guess(userGuess: true)

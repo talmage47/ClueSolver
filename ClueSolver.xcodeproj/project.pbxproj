@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3479CFF52E5026A4008BADCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3479CFCA2E5026A4008BADCB /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		341619112DFA3F29004E9274 /* ClueSolver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClueSolver.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3479CFCA2E5026A4008BADCB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		341619082DFA3F29004E9274 = {
 			isa = PBXGroup;
 			children = (
+				3479CFCA2E5026A4008BADCB /* Assets.xcassets */,
 				341619132DFA3F29004E9274 /* ClueSolver */,
 				341619122DFA3F29004E9274 /* Products */,
 			);
@@ -109,6 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3479CFF52E5026A4008BADCB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

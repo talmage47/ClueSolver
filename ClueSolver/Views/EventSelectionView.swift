@@ -12,30 +12,95 @@ struct EventSelectionView: View {
     @Bindable var guess: Guess
     
     var body: some View {
-        VStack{
-            
-            Toggle("User Guess is \(guess.userGuess ? "ON" : "OFF")", isOn: $guess.userGuess)
-                .padding(.horizontal, 80)
-            
-            if !guess.userGuess {
-                Text("Select Guesser")
-                SingleSelectionView(selectableItems: game.players, selectedItem: $guess.guesser)
+        ZStack {
+            Color("Background").ignoresSafeArea()
+            VStack {
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Toggle("User Guess is \(guess.userGuess ? "ON" : "OFF")", isOn: $guess.userGuess)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color("Foreground"))
+                )
+                .padding(.horizontal)
+                .padding(.vertical, 4)
+                
+                if !guess.userGuess {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Select Guesser")
+                        SingleSelectionView(selectableItems: game.players, selectedItem: $guess.guesser)
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color("Foreground"))
+                    )
+                    .padding(.horizontal)
+                    .padding(.vertical, 4)
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Select Character")
+                    SingleSelectionView(selectableItems: game.characters, selectedItem: $guess.character)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color("Foreground"))
+                )
+                .padding(.horizontal)
+                .padding(.vertical, 4)
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Select Weapon")
+                    SingleSelectionView(selectableItems: game.weapons, selectedItem: $guess.weapon)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color("Foreground"))
+                )
+                .padding(.horizontal)
+                .padding(.vertical, 4)
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Select Room")
+                    SingleSelectionView(selectableItems: game.rooms, selectedItem: $guess.room)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color("Foreground"))
+                )
+                .padding(.horizontal)
+                .padding(.vertical, 4)
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Select Passers")
+                    MultipleSelectionView(selectableItems: game.players, selectedItems: $guess.passers)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color("Foreground"))
+                )
+                .padding(.horizontal)
+                .padding(.vertical, 4)
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Select Disprover")
+                    SingleSelectionView(selectableItems: game.players, selectedItem: $guess.disprover)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color("Foreground"))
+                )
+                .padding(.horizontal)
+                .padding(.vertical, 4)
             }
-            
-            Text("Select Character")
-            SingleSelectionView(selectableItems: game.characters, selectedItem: $guess.character)
-            
-            Text("Select Weapon")
-            SingleSelectionView(selectableItems: game.weapons, selectedItem: $guess.weapon)
-            
-            Text("Select Room")
-            SingleSelectionView(selectableItems: game.rooms, selectedItem: $guess.room)
-            
-            Text("Select Passers")
-            MultipleSelectionView(selectableItems: game.players, selectedItems: $guess.passers)
-            
-            Text("Select Disprover")
-            SingleSelectionView(selectableItems: game.players, selectedItem: $guess.disprover)
         }
     }
 }
@@ -64,3 +129,4 @@ struct EventSelectionView: View {
     
     EventSelectionView(game: game, guess: Guess(userGuess: false))
 }
+

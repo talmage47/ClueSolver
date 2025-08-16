@@ -11,7 +11,22 @@ struct LoadPresetView: View {
     @Binding var navPath: NavigationPath
 
     var body: some View {
-        Text("Load Game Preset")
+        ZStack {
+            Image("mansion1")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            VStack {
+                Text("Loaded Game Preset")
+                    .font(.system(size: 36, weight: .bold))
+                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .ignoresSafeArea(edges: .horizontal)
+                Spacer()
+            }
+            .padding()
+        }
     }
 }
 
