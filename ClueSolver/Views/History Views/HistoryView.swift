@@ -28,9 +28,12 @@ struct HistoryView: View {
                     .padding()
                 }
                 .sheet(item: $selectedGuess) { guess in
-                    TurnView(game: game, currentGuess: guess)
-                        .presentationDetents([.medium, .large])
-                        .padding(.vertical)
+                    ZStack {
+                        Color("Background").ignoresSafeArea()
+                        GuessView(game: game, currentGuess: guess)
+                            .padding(.vertical)
+                    }
+                    .presentationDetents([.medium, .large])
                 }
             }
         }

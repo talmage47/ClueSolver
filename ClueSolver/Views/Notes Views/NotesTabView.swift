@@ -1,5 +1,5 @@
 //
-//  TurnTabView.swift
+//  GuessTabView.swift
 //  ClueSolver
 //
 //  Created by Talmage Gaisford on 7/2/25.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct TurnTabView: View {
+struct NotesTabView: View {
     @Bindable var model: Model
 
     var body: some View {
         if let game = model.currentGame {
-            TurnView(game: game)
+            NotesView(game: game)
         } else {
             NewGamePromptView()
         }
@@ -41,5 +41,5 @@ struct TurnTabView: View {
     let model = Model()
     model.currentGame = game
     
-    return TurnTabView(model: model)
+    return NotesTabView(model: model)
 }
