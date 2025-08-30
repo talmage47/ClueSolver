@@ -17,7 +17,7 @@ struct SingleSelectionView<specificSelectableObject: SelectableObject>: View {
                 ForEach(selectableItems) { item in
                     Text(item.displayName)
                         .padding(10)
-                        .background(selectedItem?.id == item.id ? Color.blue : Color.gray.opacity(0.3))
+                        .background(selectedItem?.id == item.id ? Color.blue : Color("UnselectedButton"))
                         .foregroundColor(selectedItem?.id == item.id ? .white : .black)
                         .cornerRadius(8)
                         .onTapGesture {

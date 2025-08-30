@@ -11,10 +11,13 @@ struct GuessTabView: View {
     @Bindable var model: Model
 
     var body: some View {
-        if let game = model.currentGame {
-            GuessView(game: game)
-        } else {
-            NewGamePromptView()
+        ZStack{
+            Color("Background").ignoresSafeArea()
+            if let game = model.currentGame {
+                GuessView(game: game)
+            } else {
+                NewGamePromptView()
+            }
         }
     }
 }

@@ -13,7 +13,6 @@ struct HistoryView: View {
 
     var body: some View {
         ZStack {
-            Color("Background").ignoresSafeArea()
             VStack {
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 12) {
@@ -29,11 +28,16 @@ struct HistoryView: View {
                 }
                 .sheet(item: $selectedGuess) { guess in
                     ZStack {
-                        Color("Background").ignoresSafeArea()
-                        GuessView(game: game, currentGuess: guess)
-                            .padding(.vertical)
+                        Color("SheetBackground").ignoresSafeArea()
+                        VStack {
+                            RoundedRectangle(cornerRadius: 3)
+                                    .fill(Color("UnselectedButton"))
+                                    .frame(width: 40, height: 6)
+                                    .padding(.top, 8)
+                            GuessView(game: game, currentGuess: guess)
+                        }
                     }
-//                    .presentationDetents([.medium, .large])
+                    .ignoresSafeArea(.container, edges: .bottom)
                 }
             }
         }

@@ -11,10 +11,13 @@ struct NotesTabView: View {
     @Bindable var model: Model
 
     var body: some View {
-        if let game = model.currentGame {
-            NotesView(game: game)
-        } else {
-            NewGamePromptView()
+        ZStack{
+            Color("Background").ignoresSafeArea()
+            if let game = model.currentGame {
+                NotesView(game: game)
+            } else {
+                NewGamePromptView()
+            }
         }
     }
 }

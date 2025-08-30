@@ -49,7 +49,7 @@ struct HomeView: View {
                         navPath.append(Route.loadPreset)
                     }
                     .buttonStyle(HomeButtonStyle())
-
+                    
                     Spacer()
                     
                     Button("Load Saved Game") {
@@ -119,10 +119,9 @@ struct HomeButtonStyle: ButtonStyle {
         configuration.label
             .font(.title2)
             .padding()
-            .background(Color.blue.opacity(configuration.isPressed ? 0.7 : 1))
             .foregroundColor(.white)
-            .cornerRadius(10)
             .padding(.horizontal)
+            .glassEffect(in: .rect(cornerRadius: 10.0))
     }
 }
 

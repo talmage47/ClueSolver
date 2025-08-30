@@ -53,7 +53,6 @@ struct GuessView: View {
     
     var body: some View {
         ZStack{
-            Color("Background").ignoresSafeArea()
             ScrollView{
                 EventSelectionView(game: game, guess: currentGuess)
                 
@@ -62,8 +61,8 @@ struct GuessView: View {
                     currentGuess = Guess(userGuess: false)
                 }
                 .padding()
-                .background(allSelectionsMade ? Color.blue : Color.gray)
-                .foregroundColor(.white)
+                .background(allSelectionsMade ? Color.green : Color("UnselectedButton"))
+                .foregroundColor(allSelectionsMade ? Color.white : Color.black)
                 .cornerRadius(8)
                 .disabled(!allSelectionsMade)
                 .padding()

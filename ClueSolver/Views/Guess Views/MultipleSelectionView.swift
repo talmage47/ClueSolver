@@ -18,7 +18,7 @@ struct MultipleSelectionView<SpecificSelectableObject: SelectableObject>: View {
                 
                 Text(item.displayName)
                     .padding(10)
-                    .background(isSelected ? Color.blue : Color.gray.opacity(0.3))
+                    .background(isSelected ? Color.blue : Color("UnselectedButton"))
                     .foregroundColor(isSelected ? .white : .black)
                     .cornerRadius(8)
                     .onTapGesture {

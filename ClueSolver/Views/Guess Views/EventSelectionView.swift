@@ -13,11 +13,11 @@ struct EventSelectionView: View {
     
     var body: some View {
         ZStack {
-            Color("Background").ignoresSafeArea()
             VStack {
                 
                 VStack(alignment: .leading, spacing: 8) {
                     Toggle("User Guess is \(guess.userGuess ? "ON" : "OFF")", isOn: $guess.userGuess)
+                        .tint(Color.blue)
                 }
                 .padding()
                 .background(

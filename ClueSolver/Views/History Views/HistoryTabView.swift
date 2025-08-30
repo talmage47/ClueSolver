@@ -11,10 +11,13 @@ struct HistoryTabView: View {
     @Bindable var model: Model
 
     var body: some View {
-        if let game = model.currentGame {
-            HistoryView(game: game)
-        } else {
-            NewGamePromptView()
+        ZStack{
+            Color("Background").ignoresSafeArea()
+            if let game = model.currentGame {
+                HistoryView(game: game)
+            } else {
+                NewGamePromptView()
+            }
         }
     }
 }
