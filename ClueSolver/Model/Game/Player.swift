@@ -11,6 +11,8 @@ import SwiftUI
 
 protocol SelectableObject: Identifiable, Equatable, Hashable {
     var displayName: String { get }
+    let id: UUID
+
 }
 
 @Observable

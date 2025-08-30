@@ -33,7 +33,7 @@ struct HistoryView: View {
                         GuessView(game: game, currentGuess: guess)
                             .padding(.vertical)
                     }
-                    .presentationDetents([.medium, .large])
+//                    .presentationDetents([.medium, .large])
                 }
             }
         }
