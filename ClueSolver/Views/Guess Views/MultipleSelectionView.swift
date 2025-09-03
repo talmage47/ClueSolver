@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct MultipleSelectionView<SpecificSelectableObject: SelectableObject>: View {
-    var selectableItems: [SpecificSelectableObject]
-    @Binding var selectedItems: Set<SpecificSelectableObject>
+struct MultipleSelectionView<T: GameObject>: View where T: Hashable {
+    var selectableItems: [T]
+    @Binding var selectedItems: Set<T>
 
     var body: some View {
         FlowLayout {
-            ForEach(selectableItems) { item in
+            ForEach(selectableItems, id: \.self) { item in
                 let isSelected = selectedItems.contains(item)
                 
-                Text(item.displayName)
+                Text(item.gameObjectName ?? "blank" as String)
                     .padding(10)
                     .background(isSelected ? Color.blue : Color("UnselectedButton"))
                     .foregroundColor(isSelected ? .white : .black)
@@ -53,3 +53,4 @@ struct MultipleSelectionView<SpecificSelectableObject: SelectableObject>: View {
 
     return PreviewWrapper()
 }
+

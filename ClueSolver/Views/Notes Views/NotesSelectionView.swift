@@ -9,8 +9,8 @@ import SwiftUI
 
 struct NotesSelectionView: View {
     @Bindable var game: Game
-    @Bindable var selectableObjectArray: [any SelectableObject]
-    @State private var selectedObject: (any SelectableObject)? = nil
+    var selectableObjectArray: [GameObject]
+    @State private var selectedObject: GameObject = nil
     @State private var showSheet: Bool = false
     
     var body: some View {

@@ -54,7 +54,7 @@ struct GuessView: View {
     var body: some View {
         ZStack{
             ScrollView{
-                EventSelectionView(game: game, guess: currentGuess)
+                GuessSelectionView(game: game, guess: currentGuess)
                 
                 Button("Confirm") {
                     game.guessRecord.append(currentGuess)

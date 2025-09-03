@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EventSelectionView: View {
+struct GuessSelectionView: View {
     @Bindable var game: Game
     @Bindable var guess: Guess
     
@@ -127,6 +127,6 @@ struct EventSelectionView: View {
         return game
     }()
     
-    EventSelectionView(game: game, guess: Guess(userGuess: false))
+    GuessSelectionView(game: game, guess: Guess(userGuess: false))
 }
 

@@ -2,54 +2,63 @@
 //  Card.swift
 //  ClueSolver
 //
-//  Created by Talmage Gaisford on 6/11/25.
+//  Created by Talmage Gaisford on 9/2/25.
 //
 
 import Foundation
 
 @Observable
-class Card: Identifiable, Equatable, Hashable, SelectableObject {
-    let id = UUID()
-    var cardName: String
+class Card: GameObject{
 
-    init(cardName: String) {
-        self.cardName = cardName
-    }
+    var unknownPlayers = Array<Player>()
+    var noPlayers = Array<Player>()
+    var yesPlayers = Array<Player>()
+    var isPossibleSolution: Bool = true
 
-    var displayName: String { cardName }
+    var cardName: String?
 
-    static func == (lhs: Card, rhs: Card) -> Bool {
-        lhs.id == rhs.id
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
 }
 
-class GameCharacter: Card {
+class GameCharacter: Card{
     var characterName: String
 
     init(characterName: String) {
         self.characterName = characterName
-        super.init(cardName: characterName)
+        super.init()
+        self.cardName = characterName
+        self.gameObjectName = characterName
     }
 }
 
-class Weapon: Card {
+//extension GameCharacter: SelectableGameObject {
+//    var displayName: String { characterName }
+//}
+
+class Weapon: Card{
     var weaponName: String
 
     init(weaponName: String) {
         self.weaponName = weaponName
-        super.init(cardName: weaponName)
+        super.init()
+        self.cardName = weaponName
     }
+
 }
 
-class Room: Card {
+//extension Weapon: SelectableGameObject {
+//    var displayName: String { weaponName }
+//}
+
+class Room: Card{
     var roomName: String
 
     init(roomName: String) {
         self.roomName = roomName
-        super.init(cardName: roomName)
+        super.init()
+        self.cardName = roomName
     }
 }
+
+//extension Room: SelectableGameObject {
+//    var displayName: String { roomName }
+//}
