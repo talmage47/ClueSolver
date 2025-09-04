@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct PlayerNotesView: View {
+struct CardNotesView: View {
     @Environment(\.dismiss) private var dismiss
-    var player: Player
+    @Bindable var card: Card
     
     var body: some View {
-        Text("Player notes view")
+        Text("Card notes view")
     }
 }
 
 #Preview {
-    PlayerNotesView(player: Game.mockGame().players[0])
+    CardNotesView(card: Game.mockGame().weapons[0])
 }

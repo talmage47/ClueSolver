@@ -11,6 +11,11 @@ import Foundation
 class Card: Identifiable, Equatable, Hashable, SelectableObject {
     let id = UUID()
     var cardName: String
+    
+    var yesPlayer: Player?
+    var maybePlayers: [Player] = []
+    var noPlayers: [Player] = []
+    var unknownPlayers: [Player] = []
 
     init(cardName: String) {
         self.cardName = cardName

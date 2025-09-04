@@ -19,6 +19,11 @@ class Player: Identifiable, Equatable, Hashable, SelectableObject {
     var playerName: String
 
     var displayName: String { playerName }
+    
+    var yesCards: [Card] = []
+    var maybeCardSets: [[Card]] = []
+    var noCards: [Card] = []
+    var unknownCards: [Card] = []
 
     init(playerName: String) {
         self.playerName = playerName

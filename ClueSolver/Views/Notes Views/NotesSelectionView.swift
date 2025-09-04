@@ -7,39 +7,24 @@
 
 import SwiftUI
 
-struct NotesSelectionView: View {
-    @Bindable var game: Game
-    @Bindable var selectableObjectArray: [any SelectableObject]
-    @State private var selectedObject: (any SelectableObject)? = nil
-    @State private var showSheet: Bool = false
+struct NotesSelectionView<specificSelectableObject: SelectableObject>: View {
+    var selectableItems: [specificSelectableObject]
+    @Binding var selectedItem: specificSelectableObject?
     
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Players")
                 FlowLayout {
-                    ForEach(game.players, id: \.id) { item in
+                    ForEach(selectableItems) { item in
                         Text(item.displayName)
                             .padding(10)
                             .background(Color("UnselectedButton"))
                             .foregroundColor(.black)
                             .cornerRadius(8)
                             .onTapGesture {
-                                selectedObject = item
-                                showSheet = true
+                                selectedItem = item
                             }
-                    }
-                }
-                .sheet(isPresented: $showSheet) {
-                    ZStack {
-                        Color("SheetBackground").ignoresSafeArea()
-                        VStack {
-                            RoundedRectangle(cornerRadius: 3)
-                                .fill(Color("UnselectedButton"))
-                                .frame(width: 40, height: 6)
-                                .padding(.top, 8)
-                            PlayerNotesView()
-                        }
                     }
                 }
             }
@@ -54,6 +39,6 @@ struct NotesSelectionView: View {
     }
 }
 
-#Preview {
-    NotesSelectionView()
-}
+//#Preview {
+//    NotesSelectionView(game: Game.mockGame(), selectableObjectArray: Game.mockGame().players)
+//}

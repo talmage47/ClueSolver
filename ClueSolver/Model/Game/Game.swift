@@ -16,6 +16,16 @@ class Game: Hashable {
     var weapons: [Weapon] = []
     var rooms: [Room] = []
     
+    var totalCards: Int {
+        return characters.count
+        + weapons.count
+        + rooms.count
+    }
+    
+    var cardsPerPlayer: Int {
+        return totalCards / players.count
+    }
+    
     var userCards: Set<Card> = []
     var communityCards: Set<Card> = []
     
