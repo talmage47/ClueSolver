@@ -24,7 +24,7 @@ private struct PreviewWrapper: View {
 
     var body: some View {
 
-        return LoadPresetView(
+        return LoadTemplateView(
             navPath: $navPath,
         )
     }

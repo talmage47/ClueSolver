@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24233.11" systemVersion="25A5351b" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CharacterTemplate" representedClassName="CharacterTemplate" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="template" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Template" inverseName="characters" inverseEntity="Template"/>
+    </entity>
+    <entity name="RoomTemplate" representedClassName="RoomTemplate" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="template" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Template" inverseName="rooms" inverseEntity="Template"/>
+    </entity>
+    <entity name="Template" representedClassName="Template" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CharacterTemplate" inverseName="template" inverseEntity="CharacterTemplate"/>
+        <relationship name="rooms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RoomTemplate" inverseName="template" inverseEntity="RoomTemplate"/>
+        <relationship name="weapons" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponTemplate" inverseName="template" inverseEntity="WeaponTemplate"/>
+    </entity>
+    <entity name="WeaponTemplate" representedClassName="WeaponTemplate" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="template" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Template" inverseName="weapons" inverseEntity="Template"/>
+    </entity>
+</model>

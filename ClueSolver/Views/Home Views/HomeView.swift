@@ -10,7 +10,7 @@ import SwiftUI
 enum Route: Hashable {
     case newGame(Game)
     case cardSelector(Game)
-    case loadPreset
+    case loadTemplate
     case loadSavedGame
 }
 
@@ -44,20 +44,19 @@ struct HomeView: View {
                     
                     Spacer()
                     
-                    Button("Load Game Preset") {
-                        model.currentGame = Game.mockGame()
-                        navPath.append(Route.loadPreset)
+                    Button("Load Game Template") {
+                        navPath.append(Route.loadTemplate(model))
                     }
                     .buttonStyle(HomeButtonStyle())
                     
                     Spacer()
                     
-                    Button("Load Saved Game") {
-                        navPath.append(Route.loadSavedGame)
-                    }
-                    .buttonStyle(HomeButtonStyle())
-                    
-                    Spacer()
+//                    Button("Load Saved Game") {
+//                        navPath.append(Route.loadSavedGame)
+//                    }
+//                    .buttonStyle(HomeButtonStyle())
+//                    
+//                    Spacer()
                 }
                 .navigationDestination(for: Route.self) { route in
                     switch route {
@@ -65,8 +64,8 @@ struct HomeView: View {
                         NewGameView(game: game, navPath: $navPath)
                     case .cardSelector(let game):
                         CardSelectorView(game: game, navPath: $navPath, onComplete: { game in model.startNewGame(newGame: game)})
-                    case .loadPreset:
-                        LoadPresetView(navPath: $navPath)
+                    case .loadTemplate(let model):
+                        LoadTemplateView(model: model, navPath: $navPath)
                     case .loadSavedGame:
                         LoadSavedGameView(navPath: $navPath)
                     }
