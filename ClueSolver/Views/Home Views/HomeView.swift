@@ -45,7 +45,7 @@ struct HomeView: View {
                     Spacer()
                     
                     Button("Load Game Template") {
-                        navPath.append(Route.loadTemplate(model))
+                        navPath.append(Route.loadTemplate)
                     }
                     .buttonStyle(HomeButtonStyle())
                     
@@ -64,7 +64,7 @@ struct HomeView: View {
                         NewGameView(game: game, navPath: $navPath)
                     case .cardSelector(let game):
                         CardSelectorView(game: game, navPath: $navPath, onComplete: { game in model.startNewGame(newGame: game)})
-                    case .loadTemplate(let model):
+                    case .loadTemplate:
                         LoadTemplateView(model: model, navPath: $navPath)
                     case .loadSavedGame:
                         LoadSavedGameView(navPath: $navPath)

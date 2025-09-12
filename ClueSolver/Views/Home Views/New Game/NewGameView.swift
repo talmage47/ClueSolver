@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct NewGameView: View {
     var game: Game
     @Binding var navPath: NavigationPath
-    
     @State private var selectedTab: NewGameNavTab = .playersTab
+    
+    @Environment(\.managedObjectContext) private var context
+    
+    @State private var isShowingTemplateNameAlert = false
+    @State private var templateName: String = ""
+    @State private var templateSaveError: String? = nil
+    
     var allCardsAdded: Bool {
         !game.players.isEmpty && !game.characters.isEmpty && !game.weapons.isEmpty && !game.rooms.isEmpty
         }
@@ -22,15 +29,27 @@ struct NewGameView: View {
                 .background(Color(.systemBackground))
                 .zIndex(1)
     
-            Button("Continue") {
-                navPath.append(Route.cardSelector(game))
+            HStack {
+                Button("Save as Template") {
+                    isShowingTemplateNameAlert = true
+                }
+                .padding()
+                .background(allCardsAdded ? Color.green : Color.gray)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                .disabled(!allCardsAdded)
+                .padding()
+                
+                Button("Continue") {
+                    navPath.append(Route.cardSelector(game))
+                }
+                .padding()
+                .background(allCardsAdded ? Color.blue : Color.gray)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                .disabled(!allCardsAdded)
+                .padding()
             }
-            .padding()
-            .background(allCardsAdded ? Color.blue : Color.gray)
-            .foregroundColor(.white)
-            .cornerRadius(8)
-            .disabled(!allCardsAdded)
-            .padding()
             
             Divider()
             
@@ -47,6 +66,24 @@ struct NewGameView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .alert("Save Template", isPresented: $isShowingTemplateNameAlert) {
+                TextField("Template Name", text: $templateName)
+                Button("Save", action: {
+                    do {
+                        try Model.shared.saveTemplate(from: game, named: templateName, context: context)
+                        templateName = ""
+                    } catch {
+                        templateSaveError = error.localizedDescription
+                    }
+                })
+                Button("Cancel", role: .cancel, action: { templateName = "" })
+            } message: {
+                if let error = templateSaveError {
+                    Text("Error: \(error)")
+                } else {
+                    Text("Enter a name to save this template.")
+                }
+            }
             .padding()
         }
     }

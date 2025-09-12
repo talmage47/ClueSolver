@@ -16,13 +16,13 @@ struct NewGameNavBar: View {
        
        var body: some View {
            HStack {
-               tabItem(tab: .playersTab, systemImage: "person.3.fill")
-               Spacer()
                tabItem(tab: .charactersTab, systemImage: "hat.widebrim.fill")
                Spacer()
                tabItem(tab: .weaponsTab, systemImage: "fork.knife")
                Spacer()
                tabItem(tab: .roomsTab, systemImage: "house.fill")
+               Spacer()
+               tabItem(tab: .playersTab, systemImage: "person.3.fill")
            }
            .padding(.horizontal)
        }
