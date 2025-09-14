@@ -49,47 +49,59 @@ struct LoadTemplateView: View {
                 .padding(.bottom, 20)
             }
         }
+        
         .sheet(isPresented: $showSheet) {
-            if let template = selectedTemplate {
-                VStack(spacing: 16) {
-                    Text(template.name ?? "Unnamed Template").font(.title2).padding(.top)
-                    Divider()
-                    Text("Characters").font(.headline)
-                    if let characters = template.characters {
-                        ForEach(Array(characters), id: \.self) { character in
-                            Text(character.name)
-                        }
+            ZStack {
+                Color("SheetBackground").ignoresSafeArea()
+                VStack {
+                    RoundedRectangle(cornerRadius: 3)
+                        .fill(Color("UnselectedButton"))
+                        .frame(width: 40, height: 6)
+                        .padding(.top, 8)
+                    
+                    if let template = selectedTemplate {
+                        VStack(spacing: 16) {
+                            Text(template.name ?? "Unnamed Template").font(.title2).padding(.top)
+                            Divider()
+                            Text("Characters").font(.headline)
+                            if let characters = template.characters {
+                                ForEach(Array(characters), id: \.self) { character in
+                                    Text(character.name)
+                                }
+                            }
+                            Divider()
+                            Text("Weapons").font(.headline)
+                            if let weapons = template.weapons {
+                                ForEach(Array(weapons), id: \.self) { weapon in
+                                    Text(weapon.name)
+                                }
+                            }
+                            Divider()
+                            Text("Rooms").font(.headline)
+                            if let rooms = template.rooms {
+                                ForEach(Array(rooms), id: \.self) { room in
+                                    Text(room.name)
+                                }
+                            }
+                            Spacer()
+                            Button("Confirm Load") {
+                                showSheet = false
+                                navPath.append(Route.newGame(model.TemplateToGame(template)))
+                            }
+                            .font(.title3)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            Spacer()
+                        }.padding()
+                    } else {
+                        Text("No template selected.")
                     }
-                    Divider()
-                    Text("Weapons").font(.headline)
-                    if let weapons = template.weapons {
-                        ForEach(Array(weapons), id: \.self) { weapon in
-                            Text(weapon.name)
-                        }
-                    }
-                    Divider()
-                    Text("Rooms").font(.headline)
-                    if let rooms = template.rooms {
-                        ForEach(Array(rooms), id: \.self) { room in
-                            Text(room.name)
-                        }
-                    }
-                    Spacer()
-                    Button("Confirm Load") {
-                        showSheet = false
-                        navPath.append(Route.newGame(model.TemplateToGame(template)))
-                    }
-                    .font(.title3)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    Spacer()
-                }.padding()
-            } else {
-                Text("No template selected.")
+                }
             }
         }
+        .ignoresSafeArea(.container, edges: .bottom)
     }
 }
 

@@ -26,7 +26,7 @@ struct NewGameView: View {
     var body: some View {
         VStack(spacing: 0) {
             NewGameNavBar(selectedTab: $selectedTab)
-                .background(Color(.systemBackground))
+                .background(Color("Background"))
                 .zIndex(1)
     
             HStack {
