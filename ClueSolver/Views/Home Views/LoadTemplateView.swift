@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct LoadTemplateView: View {
-    var model: Model
     @Binding var navPath: NavigationPath
-    @Environment(\.managedObjectContext) private var context
     
     @State private var selectedTemplate: Template? = nil
     @State private var showSheet = false
+    @State var fetchedTemplates = Array((try? Model.shared.fetchTemplates(context: Model.shared.context)) ?? [])
 
     var body: some View {
+        
         ZStack {
             Image("mansion1")
                 .resizable()
@@ -25,16 +25,15 @@ struct LoadTemplateView: View {
                 
                 Spacer()
                 Button("Load Mock Game") {
-                    model.currentGame = Game.mockGame()
+                    Model.shared.currentGame = Game.mockGame()
                 }
                 Spacer()
                 
                 ScrollView {
-                    VStack(spacing: 12) {
-                        ForEach(Array((try? model.fetchTemplates(context: context)) ?? []), id: \.id) { template in
+                        ForEach(fetchedTemplates, id: \.id) { template in
                             Button(action: {
                                 selectedTemplate = template
-                                showSheet = true
+//                                showSheet = true
                             }) {
                                 Text(template.name ?? "Unnamed Template")
                                     .frame(maxWidth: .infinity)
@@ -44,13 +43,13 @@ struct LoadTemplateView: View {
                                     .foregroundColor(.black)
                             }
                         }
-                    }
+                        .onDelete(perform: deleteTemplates)
                 }
                 .padding(.bottom, 20)
             }
         }
         
-        .sheet(isPresented: $showSheet) {
+        .sheet(item: $selectedTemplate) {template in
             ZStack {
                 Color("SheetBackground").ignoresSafeArea()
                 VStack {
@@ -59,64 +58,65 @@ struct LoadTemplateView: View {
                         .frame(width: 40, height: 6)
                         .padding(.top, 8)
                     
-                    if let template = selectedTemplate {
-                        VStack(spacing: 16) {
-                            Text(template.name ?? "Unnamed Template").font(.title2).padding(.top)
-                            Divider()
-                            Text("Characters").font(.headline)
-                            if let characters = template.characters {
-                                ForEach(Array(characters), id: \.self) { character in
-                                    Text(character.name)
-                                }
+                    VStack(spacing: 16) {
+                        Text(template.name ?? "Unnamed Template").font(.title2).padding(.top)
+                        Divider()
+                        Text("Characters").font(.headline)
+                        if let characters = template.characters {
+                            ForEach(Array(characters), id: \.self) { character in
+                                Text(character.name)
                             }
-                            Divider()
-                            Text("Weapons").font(.headline)
-                            if let weapons = template.weapons {
-                                ForEach(Array(weapons), id: \.self) { weapon in
-                                    Text(weapon.name)
-                                }
+                        }
+                        Divider()
+                        Text("Weapons").font(.headline)
+                        if let weapons = template.weapons {
+                            ForEach(Array(weapons), id: \.self) { weapon in
+                                Text(weapon.name)
                             }
-                            Divider()
-                            Text("Rooms").font(.headline)
-                            if let rooms = template.rooms {
-                                ForEach(Array(rooms), id: \.self) { room in
-                                    Text(room.name)
-                                }
+                        }
+                        Divider()
+                        Text("Rooms").font(.headline)
+                        if let rooms = template.rooms {
+                            ForEach(Array(rooms), id: \.self) { room in
+                                Text(room.name)
                             }
-                            Spacer()
-                            Button("Confirm Load") {
-                                showSheet = false
-                                navPath.append(Route.newGame(model.TemplateToGame(template)))
-                            }
-                            .font(.title3)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            Spacer()
-                        }.padding()
-                    } else {
-                        Text("No template selected.")
-                    }
+                        }
+                        Spacer()
+                        Button("Confirm Load") {
+                            showSheet = false
+                            navPath.append(Route.newGame(Model.shared.TemplateToGame(template)))
+                        }
+                        .font(.title3)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        Spacer()
+                    }.padding()
                 }
             }
         }
         .ignoresSafeArea(.container, edges: .bottom)
     }
+    
+    func deleteTemplates(at offsets: IndexSet) {
+        fetchedTemplates.remove(atOffsets: offsets)
+    }
+    
 }
 
-//#Preview {
-//    PreviewWrapper()
-//}
-//
-//private struct PreviewWrapper: View {
-//    @State private var navPath = NavigationPath()
-//
-//    var body: some View {
-//
-//        return LoadTemplateView(
-//            navPath: $navPath,
-//        )
-//    }
-//}
+#Preview {
+    PreviewWrapper()
+}
+
+private struct PreviewWrapper: View {
+    @State private var navPath = NavigationPath()
+
+    var body: some View {
+
+        return LoadTemplateView(
+            navPath: $navPath,
+        )
+    }
+}
 

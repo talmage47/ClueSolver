@@ -65,7 +65,7 @@ struct HomeView: View {
                     case .cardSelector(let game):
                         CardSelectorView(game: game, navPath: $navPath, onComplete: { game in model.startNewGame(newGame: game)})
                     case .loadTemplate:
-                        LoadTemplateView(model: model, navPath: $navPath)
+                        LoadTemplateView(navPath: $navPath)
                     case .loadSavedGame:
                         LoadSavedGameView(navPath: $navPath)
                     }
@@ -124,6 +124,6 @@ struct HomeButtonStyle: ButtonStyle {
     }
 }
 
-#Preview {
-    HomeView(model: Model())
-}
+//#Preview {
+//    HomeView(model: Model())
+//}

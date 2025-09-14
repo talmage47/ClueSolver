@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 @objc(Template)
-public class Template: NSManagedObject {
+public class Template: NSManagedObject, Identifiable {
     @NSManaged public var id: UUID
     @NSManaged public var name: String?
     @NSManaged public var characters: Set<CharacterTemplate>?

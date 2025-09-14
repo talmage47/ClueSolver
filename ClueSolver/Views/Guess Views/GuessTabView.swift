@@ -22,27 +22,27 @@ struct GuessTabView: View {
     }
 }
 
-#Preview {
-    let game = Game()
-    game.players = [
-        Player(playerName: "Talmage"),
-        Player(playerName: "Myla")
-    ]
-    game.characters = [
-        GameCharacter(characterName: "Miss Scarlet"),
-        GameCharacter(characterName: "Colonel Mustard")
-    ]
-    game.weapons = [
-        Weapon(weaponName: "Candlestick"),
-        Weapon(weaponName: "Dagger"),
-        Weapon(weaponName: "Revolver")
-    ]
-    game.rooms = [
-        Room(roomName: "Kitchen")
-    ]
-    
-    let model = Model()
-    model.currentGame = game
-    
-    return GuessTabView(model: model)
-}
+//#Preview {
+//    let game = Game()
+//    game.players = [
+//        Player(playerName: "Talmage"),
+//        Player(playerName: "Myla")
+//    ]
+//    game.characters = [
+//        GameCharacter(characterName: "Miss Scarlet"),
+//        GameCharacter(characterName: "Colonel Mustard")
+//    ]
+//    game.weapons = [
+//        Weapon(weaponName: "Candlestick"),
+//        Weapon(weaponName: "Dagger"),
+//        Weapon(weaponName: "Revolver")
+//    ]
+//    game.rooms = [
+//        Room(roomName: "Kitchen")
+//    ]
+//    
+//    let model = Model.shared
+//    model.currentGame = game
+//    
+//    GuessTabView(model: model)
+//}

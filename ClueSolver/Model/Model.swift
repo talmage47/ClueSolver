@@ -10,47 +10,61 @@ import CoreData
 
 @Observable
 class Model {
-   static let shared = Model()
-   var context: NSManagedObjectContext? = nil
-   var currentGame: Game?
+    static let shared = Model()
+    var context: NSManagedObjectContext
+    var currentGame: Game?
+    var persistentContainer: NSPersistentContainer
+    
+    private init() {
+        // Set up persistent container
+        let persistentContainer: NSPersistentContainer = {
+            let container = NSPersistentContainer(name: "ClueSolverCoreData") // Use your .xcdatamodeld name
+            container.loadPersistentStores { _, error in
+                if let error = error {
+                    fatalError("Unresolved error \(error)")
+                }
+            }
+            return container
+        }()
+        self.persistentContainer = persistentContainer
+        context = persistentContainer.viewContext
+    }
    
    /// Fetches all templates from the given managed object context.
    /// If no context is provided, uses the `context` property of this class.
    /// - Parameter context: An optional `NSManagedObjectContext` to fetch from.
    /// - Throws: An error if fetching fails or if context is not available.
    /// - Returns: Array of `Template` objects.
-   func fetchTemplates(context: NSManagedObjectContext? = nil) throws -> [Template] {
-       let ctx = context ?? self.context
-       guard let context = ctx else {
-           fatalError("Managed object context is not set")
-       }
-       let request: NSFetchRequest<Template> = Template.fetchRequest()
-       return try context.fetch(request)
-   }
+    func fetchTemplates(context: NSManagedObjectContext? = nil) throws -> [Template] {
+        let ctx = context ?? self.context
+        let request: NSFetchRequest<Template> = Template.fetchRequest()
+        return try ctx.fetch(request)
+    }
    
-   func startNewGame(newGame: Game) {
+    func startNewGame(newGame: Game) {
 //        savedGames.insert(newGame)
-       currentGame = newGame
-   }
-   
-   func TemplateToGame(_ template: Template) -> Game{
-       let newGame = Game()
+        currentGame = newGame
+    }
+    
+    func TemplateToGame(_ template: Template) -> Game{
+        let newGame = Game()
        // Load characters
-       if let characters = template.characters {
-           newGame.characters = characters.map { GameCharacter(characterName: $0.name) }
+        if let characters = template.characters {
+            newGame.characters = characters.map { GameCharacter(characterName: $0.name) }
        }
        // Load weapons
-       if let weapons = template.weapons {
-           newGame.weapons = weapons.map { Weapon(weaponName: $0.name) }
-       }
+        if let weapons = template.weapons {
+            newGame.weapons = weapons.map { Weapon(weaponName: $0.name) }
+        }
        // Load rooms
-       if let rooms = template.rooms {
-           newGame.rooms = rooms.map { Room(roomName: $0.name) }
+        if let rooms = template.rooms {
+            newGame.rooms = rooms.map { Room(roomName: $0.name) }
        }
        // Players are not in the template, so leave as is (empty)
        // Start the new game (adds to savedGames and sets currentGame)
-       return newGame
-   }
+        return newGame
+    }
+    
    
    /// Saves the given game as a template with the specified name into the provided context.
    /// If no context is provided, uses the `context` property of this class.
@@ -59,29 +73,27 @@ class Model {
    ///   - name: The name of the template.
    ///   - context: An optional `NSManagedObjectContext` to save into.
    /// - Throws: An error if saving fails or if context is not available.
-   func saveTemplate(from game: Game, named name: String, context: NSManagedObjectContext? = nil) throws {
-       let ctx = context ?? self.context
-       guard let context = ctx else {
-           fatalError("Managed object context is not set")
-       }
-       let template = Template(context: context)
-       template.id = UUID()
-       template.name = name
+    func saveTemplate(from game: Game, named name: String, context: NSManagedObjectContext? = nil) throws {
+        let ctx = context ?? self.context
+
+        let template = Template(context: ctx)
+        template.id = UUID()
+        template.name = name
 
        // Characters
-       var characterTemplates = Set<CharacterTemplate>()
-       for character in game.characters {
-           let ct = CharacterTemplate(context: context)
-           ct.name = character.characterName
-           ct.template = template
-           characterTemplates.insert(ct)
-       }
-       template.characters = characterTemplates
+        var characterTemplates = Set<CharacterTemplate>()
+        for character in game.characters {
+            let ct = CharacterTemplate(context: ctx)
+            ct.name = character.characterName
+            ct.template = template
+            characterTemplates.insert(ct)
+        }
+        template.characters = characterTemplates
 
        // Weapons
        var weaponTemplates = Set<WeaponTemplate>()
        for weapon in game.weapons {
-           let wt = WeaponTemplate(context: context)
+           let wt = WeaponTemplate(context: ctx)
            wt.name = weapon.weaponName
            wt.template = template
            weaponTemplates.insert(wt)
@@ -91,14 +103,14 @@ class Model {
        // Rooms
        var roomTemplates = Set<RoomTemplate>()
        for room in game.rooms {
-           let rt = RoomTemplate(context: context)
+           let rt = RoomTemplate(context: ctx)
            rt.name = room.roomName
            rt.template = template
            roomTemplates.insert(rt)
        }
        template.rooms = roomTemplates
 
-       try context.save()
+       try ctx.save()
    }
    
 }

@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-@objc(RoomCard)
+@objc(RoomTemplate)
 public class RoomTemplate: NSManagedObject {
     @NSManaged public var name: String
     @NSManaged public var template: Template?
@@ -16,6 +16,6 @@ public class RoomTemplate: NSManagedObject {
 
 extension RoomTemplate {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<RoomTemplate> {
-        return NSFetchRequest<RoomTemplate>(entityName: "RoomCard")
+        return NSFetchRequest<RoomTemplate>(entityName: "RoomTemplate")
     }
 }

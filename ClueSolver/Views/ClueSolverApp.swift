@@ -10,26 +10,17 @@ import CoreData
 
 @main
 struct ClueSolverApp: App {
-    // Set up persistent container
-    let persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "ClueSolverModel") // Use your .xcdatamodeld name
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError("Unresolved error \(error)")
-            }
-        }
-        return container
-    }()
+
 
     init() {
-        Model.shared.context = persistentContainer.viewContext
+        let _ = Model.shared
     }
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 // Inject the managed object context
-                .environment(\.managedObjectContext, persistentContainer.viewContext)
+                .environment(\.managedObjectContext, Model.shared.context)
         }
     }
 }

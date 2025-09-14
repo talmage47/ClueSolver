@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-@objc(WeaponCard)
+@objc(WeaponTemplate)
 public class WeaponTemplate: NSManagedObject {
     @NSManaged public var name: String
     @NSManaged public var template: Template?
@@ -16,6 +16,6 @@ public class WeaponTemplate: NSManagedObject {
 
 extension WeaponTemplate {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<WeaponTemplate> {
-        return NSFetchRequest<WeaponTemplate>(entityName: "WeaponCard")
+        return NSFetchRequest<WeaponTemplate>(entityName: "WeaponTemplate")
     }
 }
