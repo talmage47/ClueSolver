@@ -17,17 +17,13 @@ struct LoadTemplateView: View {
     var body: some View {
         
         ZStack {
-            Image("mansion2")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+//            Image("mansion2")
+//                .resizable()
+//                .scaledToFill()
+//                .ignoresSafeArea()
+            Color("Background").ignoresSafeArea()
+            
             VStack {
-                
-                Rectangle()
-                    .fill(Color.black)
-                    .frame(height: 30)
-                    .frame(maxWidth: .infinity)
-                
                 
                 Button("Load Mock Game") {
                     navPath.append(Route.newGame(Game.mockGame()))
@@ -41,18 +37,18 @@ struct LoadTemplateView: View {
                             selectedTemplate = template
                         }) {
                             Text(template.name ?? "Unnamed Template")
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color("Foreground").opacity(0.8))
-                                .cornerRadius(10)
+//                                .padding()
+//                                .background(Color("Foreground").opacity(0.8))
+//                                .cornerRadius(10)
                                 .foregroundColor(Color("MainText"))
                         }
-                        .listRowBackground(Color.clear)
+//                        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                        .listRowBackground(Color("Foreground"))
                     }
                     .onDelete(perform: deleteTemplate)
                 }
-                .padding(.bottom, 20)
-                .scrollContentBackground(.hidden)
+//                .padding(.bottom, 20)
+//                .scrollContentBackground(.hidden)
             }
         }
         
@@ -65,7 +61,7 @@ struct LoadTemplateView: View {
                         .frame(width: 40, height: 6)
                         .padding(.top, 8)
                     
-                    VStack(spacing: 16) {
+                    ScrollView() {
                         Text(template.name ?? "Unnamed Template").font(.title2).padding(.top)
                         Divider()
                         Text("Characters").font(.headline)
@@ -88,19 +84,19 @@ struct LoadTemplateView: View {
                                 Text(room.name)
                             }
                         }
+                        Divider()
                         Spacer()
                         Button("Confirm Load") {
                             showSheet = false
-                            navPath.append(Route.newGame(Model.shared.TemplateToGame(template)))
+                            selectedTemplate = nil
+                            navPath = NavigationPath([Route.newGame(Model.shared.TemplateToGame(template))])
                         }
                         .font(.title3)
                         .padding()
                         .background(Color.blue)
                         .foregroundColor(.white)
                         .cornerRadius(10)
-                        Spacer()
                     }
-                    .padding()
                 }
             }
         }
