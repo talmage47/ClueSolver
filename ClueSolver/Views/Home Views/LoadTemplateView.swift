@@ -17,35 +17,42 @@ struct LoadTemplateView: View {
     var body: some View {
         
         ZStack {
-            Image("mansion1")
+            Image("mansion2")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
             VStack {
                 
-                Spacer()
-                Button("Load Mock Game") {
-                    Model.shared.currentGame = Game.mockGame()
-                }
-                Spacer()
+                Rectangle()
+                    .fill(Color.black)
+                    .frame(height: 30)
+                    .frame(maxWidth: .infinity)
                 
-                ScrollView {
-                        ForEach(fetchedTemplates, id: \.id) { template in
-                            Button(action: {
-                                selectedTemplate = template
-//                                showSheet = true
-                            }) {
-                                Text(template.name ?? "Unnamed Template")
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(Color.white.opacity(0.8))
-                                    .cornerRadius(10)
-                                    .foregroundColor(.black)
-                            }
+                
+                Button("Load Mock Game") {
+                    navPath.append(Route.newGame(Game.mockGame()))
+                }
+                .buttonStyle(HomeButtonStyle())
+
+                
+                List {
+                    ForEach(fetchedTemplates, id: \.id) { template in
+                        Button(action: {
+                            selectedTemplate = template
+                        }) {
+                            Text(template.name ?? "Unnamed Template")
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color("Foreground").opacity(0.8))
+                                .cornerRadius(10)
+                                .foregroundColor(Color("MainText"))
                         }
-                        .onDelete(perform: deleteTemplates)
+                        .listRowBackground(Color.clear)
+                    }
+                    .onDelete(perform: deleteTemplate)
                 }
                 .padding(.bottom, 20)
+                .scrollContentBackground(.hidden)
             }
         }
         
@@ -92,31 +99,19 @@ struct LoadTemplateView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                         Spacer()
-                    }.padding()
+                    }
+                    .padding()
                 }
             }
         }
-        .ignoresSafeArea(.container, edges: .bottom)
     }
     
-    func deleteTemplates(at offsets: IndexSet) {
+    func deleteTemplate(at offsets: IndexSet) {
+        for index in offsets {
+            let template = fetchedTemplates[index]
+            Model.shared.deleteTemplate(template)
+        }
         fetchedTemplates.remove(atOffsets: offsets)
     }
     
 }
-
-#Preview {
-    PreviewWrapper()
-}
-
-private struct PreviewWrapper: View {
-    @State private var navPath = NavigationPath()
-
-    var body: some View {
-
-        return LoadTemplateView(
-            navPath: $navPath,
-        )
-    }
-}
-

@@ -112,5 +112,15 @@ class Model {
 
        try ctx.save()
    }
+    
+    func deleteTemplate(_ template: Template) {
+        let context = self.context
+        context.delete(template)
+        do {
+            try context.save()
+        } catch {
+            print("Failed to delete template: \(error)")
+        }
+    }
    
 }
