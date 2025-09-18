@@ -17,7 +17,7 @@ struct SelectUserCards: View {
                 
                 Text("Characters")
                     .font(.title2)
-                MultipleSelectionView(selectableItems: game.characters, selectedItems: $game.communityCards)
+                MultipleSelectionView(selectableItems: game.characters, selectedItems: $game.userCards)
                 
                 Spacer()
                 Divider()
@@ -25,7 +25,7 @@ struct SelectUserCards: View {
                 
                 Text("Weapons")
                     .font(.title2)
-                MultipleSelectionView(selectableItems: game.weapons, selectedItems: $game.communityCards)
+                MultipleSelectionView(selectableItems: game.weapons, selectedItems: $game.userCards)
                 
                 Spacer()
                 Divider()
@@ -33,7 +33,7 @@ struct SelectUserCards: View {
                 
                 Text("Rooms")
                     .font(.title2)
-                MultipleSelectionView(selectableItems: game.rooms, selectedItems: $game.communityCards)
+                MultipleSelectionView(selectableItems: game.rooms, selectedItems: $game.userCards)
                 
                 Spacer()
             }

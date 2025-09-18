@@ -17,11 +17,11 @@ struct LoadTemplateView: View {
     var body: some View {
         
         ZStack {
-//            Image("mansion2")
-//                .resizable()
-//                .scaledToFill()
-//                .ignoresSafeArea()
-            Color("Background").ignoresSafeArea()
+            Image("mansion2")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .frame(maxWidth: .infinity)
             
             VStack {
                 
@@ -43,13 +43,17 @@ struct LoadTemplateView: View {
                                 .foregroundColor(Color("MainText"))
                         }
 //                        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                        .listRowBackground(Color("Foreground"))
+                        .listRowBackground(Color("Foreground").opacity(0.8))
+                        
                     }
+                    
                     .onDelete(perform: deleteTemplate)
                 }
 //                .padding(.bottom, 20)
-//                .scrollContentBackground(.hidden)
+                .scrollContentBackground(.hidden)
             }
+            .frame(maxWidth: UIScreen.main.bounds.width)
+
         }
         
         .sheet(item: $selectedTemplate) {template in

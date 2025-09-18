@@ -118,7 +118,6 @@ struct HomeButtonStyle: ButtonStyle {
         configuration.label
             .font(.title2)
             .padding()
-            .foregroundColor(.white)
             .padding(.horizontal)
             .glassEffect(in: .rect(cornerRadius: 10.0))
     }

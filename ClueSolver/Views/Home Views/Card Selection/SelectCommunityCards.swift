@@ -38,7 +38,7 @@ struct SelectCommunityCards: View {
                 Spacer()
             }
         }
-        .navigationTitle(Text("Select Your Cards"))
+        .navigationTitle(Text("Select Community Cards"))
     }
     
 }
