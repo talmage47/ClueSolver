@@ -13,11 +13,13 @@ struct LoadTemplateView: View {
     @State private var selectedTemplate: Template? = nil
     @State private var showSheet = false
     @State var fetchedTemplates = Array((try? Model.shared.fetchTemplates(context: Model.shared.context)) ?? [])
+    
+    @EnvironmentObject var bgState: BackgroundImageState
 
     var body: some View {
         
         ZStack {
-            Image("mansion2")
+            Image("mansion1")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()

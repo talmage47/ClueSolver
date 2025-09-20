@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     private var model = Model.shared
+    @StateObject private var bgState: BackgroundImageState
     
     var body: some View {
         TabView {
             HomeView(model: model)
+                .environmentObject(bgState)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
@@ -35,6 +37,6 @@ struct ContentView: View {
     }
 }
 
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}

@@ -17,6 +17,7 @@ enum Route: Hashable {
 struct HomeView: View {
     var model: Model
     @State private var navPath = NavigationPath()
+    @EnvironmentObject var bgState: BackgroundImageState
     
     var body: some View {
         NavigationStack(path: $navPath) {
@@ -24,6 +25,7 @@ struct HomeView: View {
                 Image("mansion1")
                     .resizable()
                     .scaledToFill()
+                    .offset(x: bgState.offset)
                     .ignoresSafeArea()
                 
                 VStack() {
@@ -45,6 +47,9 @@ struct HomeView: View {
                     Spacer()
                     
                     Button("Load Game Template") {
+                        withAnimation {
+                            bgState.offset = -50 // Pan right by 50 points
+                        }
                         navPath.append(Route.loadTemplate)
                     }
                     .buttonStyle(HomeButtonStyle())
