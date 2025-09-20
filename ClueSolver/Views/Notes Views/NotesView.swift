@@ -15,33 +15,40 @@ struct NotesView: View {
     var body: some View {
         ZStack {
             ScrollView{
-                NotesSelectionView(selectableItems: game.players, selectedItem: $selectedPlayer)
-                NotesSelectionView(selectableItems: game.characters, selectedItem: $selectedCard)
-                NotesSelectionView(selectableItems: game.weapons, selectedItem: $selectedCard)
-                NotesSelectionView(selectableItems: game.rooms, selectedItem: $selectedCard)
+                NotesSelectionView(title: "Players", selectableItems: game.players, selectedItem: $selectedPlayer)
+                Divider()
+                NotesSelectionView(title: "Characters", selectableItems: game.characters, selectedItem: $selectedCard)
+                Divider()
+                NotesSelectionView(title: "Weapons", selectableItems: game.weapons, selectedItem: $selectedCard)
+                Divider()
+                NotesSelectionView(title: "Rooms", selectableItems: game.rooms, selectedItem: $selectedCard)
 
             }
             .sheet(isPresented: Binding<Bool>(get: { selectedPlayer != nil || selectedCard != nil }, set: { newValue in if !newValue { selectedPlayer = nil; selectedCard = nil } })) {
                 ZStack {
                     Color("SheetBackground").ignoresSafeArea()
-                    if let player = selectedPlayer {
-                        VStack {
-                            RoundedRectangle(cornerRadius: 3)
-                                .fill(Color("UnselectedButton"))
-                                .frame(width: 40, height: 6)
-                                .padding(.top, 8)
+                    VStack {
+                        RoundedRectangle(cornerRadius: 3)
+                            .fill(Color("UnselectedButton"))
+                            .frame(width: 40, height: 6)
+                            .padding(.top, 8)
+                        if let player = selectedPlayer {
+                            Text(player.displayName)
+                                .font(.title)
+                                .foregroundStyle(Color("MainText"))
+                                .padding()
                             PlayerNotesView(player: player)
                         }
-                    } else if let card = selectedCard {
-                        VStack {
-                            RoundedRectangle(cornerRadius: 3)
-                                .fill(Color("UnselectedButton"))
-                                .frame(width: 40, height: 6)
-                                .padding(.top, 8)
+                        else if let card = selectedCard {
+                            Text(card.displayName)
+                                .font(.title)
+                                .foregroundStyle(Color("MainText"))
+                                .padding()
                             CardNotesView(card: card)
                         }
-                    } else {
-                        EmptyView()
+                        else {
+                            EmptyView()
+                        }
                     }
                 }
             }

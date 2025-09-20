@@ -12,7 +12,21 @@ struct PlayerNotesView: View {
     var player: Player
     
     var body: some View {
-        Text("Player notes view")
+        ScrollView{
+
+            NotesDisplayView(title: "Yes Cards", selectableItems: player.yesCards)
+            Divider()
+
+            ForEach(player.maybeCardSets.indices, id: \.self) { index in
+                NotesDisplayView(title: "Maybe Cards", selectableItems: player.maybeCardSets[index])
+                Divider()
+            }
+
+            NotesDisplayView(title: "No Cards", selectableItems: player.noCards)
+            Divider()
+
+            NotesDisplayView(title: "Unknown Cards", selectableItems: player.unknownCards)
+        }
     }
 }
 

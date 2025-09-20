@@ -9,13 +9,44 @@ import SwiftUI
 
 struct CardNotesView: View {
     @Environment(\.dismiss) private var dismiss
-    @Bindable var card: Card
+    var card: Card
     
     var body: some View {
-        Text("Card notes view")
+        ScrollView{
+            VStack{
+                Text("Yes Player")
+                    .foregroundStyle(Color("MainText"))
+                if let player = card.yesPlayer {
+                    Text("\(player.playerName)")
+                        .foregroundStyle(Color("MainText"))
+                        .backgroundStyle(Color("UnselectedButton"))
+                }
+                else {
+                    Text("unknown")
+                        .foregroundStyle(Color("MainText"))
+                        .padding(10)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color("Foreground"))
+            )
+            
+            Divider()
+
+            NotesDisplayView(title: "Maybe Players", selectableItems: card.maybePlayers)
+            Divider()
+
+            NotesDisplayView(title: "No Players", selectableItems: card.noPlayers)
+            Divider()
+
+            NotesDisplayView(title: "Unknown Players", selectableItems: card.unknownPlayers)
+        }
     }
 }
 
-#Preview {
-    CardNotesView(card: Game.mockGame().weapons[0])
-}
+//#Preview {
+//    CardNotesView(card: Game.mockGame().weapons[0])
+//}

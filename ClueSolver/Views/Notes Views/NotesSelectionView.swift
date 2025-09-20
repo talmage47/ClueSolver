@@ -8,13 +8,21 @@
 import SwiftUI
 
 struct NotesSelectionView<specificSelectableObject: SelectableObject>: View {
+    var title: String?
+    
     var selectableItems: [specificSelectableObject]
     @Binding var selectedItem: specificSelectableObject?
+    
     
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 8) {
-                Text("Players")
+                
+                if let title {
+                    Text(title)
+                        .foregroundStyle(Color("MainText"))
+                }
+                
                 FlowLayout {
                     ForEach(selectableItems) { item in
                         Text(item.displayName)
