@@ -58,6 +58,7 @@ struct GuessView: View {
                 
                 Button("Confirm") {
                     game.guessRecord.append(currentGuess)
+                    game.deductionEngine.processLatestGuess()
                     currentGuess = Guess(userGuess: false)
                 }
                 .padding()
